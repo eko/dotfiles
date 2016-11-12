@@ -24,6 +24,8 @@
     console: [
       "bin/console"
     ]
+  "atom-ternjs": {}
+  "autocomplete-go": {}
   "autocomplete-plus":
     enableExtendedUnicodeSupport: true
   core:
@@ -49,11 +51,15 @@
     ]
     useCustomTitleBar: true
   editor:
-    fontSize: 13
+    fontSize: 12
     showIndentGuide: true
     tabLength: 4
   "exception-reporting":
     userId: "df06a4e1-9c09-af3a-51d9-b173c7ee2d15"
+  "file-icons": {}
+  "git-blame": {}
+  "go-config":
+    gopath: "~/dev"
   linter: {}
   "one-dark-ui":
     fontSize: 12
@@ -72,5 +78,7 @@
   tabs:
     addNewTabsAtEnd: true
     enableVcsColoring: true
+  "tree-view":
+    squashDirectoryNames: true
   welcome:
     showOnStartup: false
