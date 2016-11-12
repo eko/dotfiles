@@ -1,0 +1,84 @@
+[core]
+    editor = atom --wait
+[user]
+    name = Vincent Composieux
+    email = vincent@composieux.fr
+[color]
+    branch = auto
+    diff = auto
+    status = auto
+    ui = true
+[color "status"]
+    added = green bold
+    changed  = cyan bold
+    untracked = yellow bold
+[color "branch"]
+    current = cyan bold
+    local = yellow
+    remote = green
+[alias]
+    a = add
+    aa = add --all :/
+    b = branch -avv
+    bd = branch -d
+    bm = branch -m
+    ci = commit
+    cia = commit --amend
+    ciaa = commit --all --amend
+    ciaan = commit --all --amend --no-edit
+    cian = commit --amend --no-edit
+    co = checkout
+    com = checkout master
+    contains = branch -avv --contains
+    d = diff --word-diff=color
+    di = diff --staged --word-diff=color
+    discard = checkout HEAD --
+    e = config --local user.email
+    f = fetch --prune --all
+    fd = filter-branch --subdirectory-filter
+    fm = !git f && git m
+    h = show HEAD --word-diff=color
+    hf = show HEAD --name-only
+    l = log --oneline --decorate
+    laf = log --oneline --decorate --follow --all --
+    lag = log --oneline --decorate --graph --all
+    lc = log --oneline --decorate --graph --left-right
+    lch = !git log --oneline --decorate --graph --left-right HEAD...$1
+    lf = log --oneline --decorate --follow --
+    lg = log --oneline --decorate --graph
+    m = merge
+    n = config --local user.name
+    r = rebase
+    ri = rebase --interactive
+    rc = rebase --continue
+    ra = rebase --abort
+    rs = rebase --skip
+    rv = remote -v
+    s = status -sb
+    su = submodule update --init --recursive
+    supgrade = submodule foreach 'git f && git co FETCH_HEAD'
+    t = tag
+    td = tag -d
+    unstage = reset HEAD --
+    up = push origin
+[push]
+    default = tracking
+[diff]
+    renames = copies
+[rerere]
+    enabled = true
+[blame]
+    date = short
+[status]
+    submodulesummary = true
+    relativePaths = false
+    showUntrackedFiles = all
+[notes]
+    rewriteRef = refs/notes/*
+[merge]
+    defaultToUpstream = true
+[advice]
+    statusHints = false
+    pushNonFastForward = false
+    implicitIdentity = false
+    detachedHead = false
