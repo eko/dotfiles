@@ -23,3 +23,6 @@ Here is the detail of available dotfiles:
 ## [.gitignore](https://raw.github.com/eko/dotfiles/master/.gitignore)
   * Install to `~/.gitignore`
   * Type `git config --global core.excludesfile ~/.gitignore`
+
+## [.editorconfig](https://raw.github.com/eko/dotfiles/master/.editorconfig)
+  * Install to `project/` directory
