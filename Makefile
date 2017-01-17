@@ -7,6 +7,7 @@ install: ## Installs dotfiles into current environment
 	@$(MAKE) DOTFILE=.atom/config.cson install_file
 	@$(MAKE) DOTFILE=.gitconfig install_file
 	@$(MAKE) DOTFILE=.gitignore install_file
+	@$(MAKE) DOTFILE=.hyper.js install_file
 
 install_file:
 	@if [ ! -f ${HOME}/${DOTFILE} ]; then \

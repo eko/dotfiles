@@ -26,3 +26,6 @@ Here is the detail of available dotfiles:
 
 ## [.editorconfig](https://raw.github.com/eko/dotfiles/master/.editorconfig)
   * Install to `project/` directory
+
+## [.hyper.js](https://raw.github.com/eko/dotfiles/master/.hyper.js)
+  * Install to `~/.hyper.js`
