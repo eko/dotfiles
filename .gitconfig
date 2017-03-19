@@ -1,8 +1,13 @@
 [core]
-    editor = atom --wait
+    editor = vim
 [user]
     name = Vincent Composieux
     email = vincent@composieux.fr
+    signingkey = 7306974ABA6382AC
+[commit]
+    gpgsign = true
+[gpg]
+    program = gpg1
 [color]
     branch = auto
     diff = auto
