@@ -13,6 +13,7 @@ install: ## Installs dotfiles into current environment
 install_file:
 	@if [ ! -f ${HOME}/${DOTFILE} ]; then \
 		echo ✔ Installing file: ${HOME}/${DOTFILE}; \
+		cp ${DOTFILE} ${HOME}/${DOTFILE}; \
 	else \
 		echo ✖ File already exists: ${HOME}/${DOTFILE}; \
 	fi \
