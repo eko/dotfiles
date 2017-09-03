@@ -1,0 +1,6 @@
+# Golang
+export GOPATH="$HOME/golang"
+export GOBIN="$GOPATH/bin"
+
+# PATH
+export PATH="$PATH:$GOBIN"

@@ -9,6 +9,10 @@ install: ## Installs dotfiles into current environment
 	@$(MAKE) DOTFILE=.gitconfig install_file
 	@$(MAKE) DOTFILE=.gitignore install_file
 	@$(MAKE) DOTFILE=.hyper.js install_file
+	@$(MAKE) DOTFILE=.aliases install_file
+	@$(MAKE) DOTFILE=.exports install_file
+	@$(MAKE) DOTFILE=.sources install_file
+	@$(MAKE) DOTFILE=.zshrc install_file
 
 install_file:
 	@if [ ! -f ${HOME}/${DOTFILE} ]; then \

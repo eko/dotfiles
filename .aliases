@@ -1,0 +1,23 @@
+# Navigation
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias -- -="cd -"
+
+# cURL
+alias curltime="curl -w \"\nConnect: %{time_connect} TTFB: %{time_starttransfer} Total time: %{time_total} \n\""
+
+# Recursively delete `.DS_Store` files
+alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
+
+# IP addresses
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias localip="ipconfig getifaddr en7"
+alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
+
+# Network interfaces
+alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
+
+# Updates macOS applications and updates Homebrew packages
+alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup'
