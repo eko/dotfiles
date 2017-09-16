@@ -1,0 +1,40 @@
+# Clones if a Git repository is given, elsewhere just cd
+function cdc() {
+    name=`sed -e 's/.*\///g' <<< $1`
+
+    if [[ ! -d "$1" && $1 =~ ^(github|bitbucket|gitlab)\.[a-z]{2,}/.*$ ]]; then
+        ssh=`sed -e 's/^/git@/' -e 's/$/.git/' -e 's/\//:/' <<< $1`
+        git clone $ssh;
+    fi
+
+    cd $name;
+}
+
+# Determines size of a file or total size of a directory
+function fs() {
+    if du -b /dev/null > /dev/null 2>&1; then
+        local arg=-sbh;
+    else
+        local arg=-sh;
+    fi
+    if [[ -n "$@" ]]; then
+        du $arg -- "$@";
+    else
+        du $arg .[^.]* ./*;
+    fi;
+}
+
+# Creates a data URL from a file
+function dataurl() {
+    local mimeType=$(file -b --mime-type "$1");
+    if [[ $mimeType == text/* ]]; then
+        mimeType="${mimeType};charset=utf-8";
+    fi
+    echo "data:${mimeType};base64,$(openssl base64 -in "$1" | tr -d '\n')";
+}
+
+# Returns useful information using dig tool
+function digga() {
+    dig +nocmd "$1" any +multiline +noall +answer;
+}
+

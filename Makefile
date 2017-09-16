@@ -11,6 +11,7 @@ install: ## Installs dotfiles into current environment
 	@$(MAKE) DOTFILE=.hyper.js install_file
 	@$(MAKE) DOTFILE=.aliases install_file
 	@$(MAKE) DOTFILE=.exports install_file
+	@$(MAKE) DOTFILE=.functions install_file
 	@$(MAKE) DOTFILE=.sources install_file
 	@$(MAKE) DOTFILE=.zshrc install_file
 
