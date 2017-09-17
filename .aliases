@@ -8,6 +8,9 @@ alias -- -="cd -"
 # cURL
 alias curltime="curl -w \"\nConnect: %{time_connect} TTFB: %{time_starttransfer} Total time: %{time_total} \n\""
 
+# Docker
+alias dce="docker-compose exec"
+
 # Recursively delete `.DS_Store` files
 alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
 
@@ -21,3 +24,6 @@ alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'
 
 # Updates macOS applications and updates Homebrew packages
 alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup'
+
+# Merge some PDFs, usage: pdfmerge file1.pdf file2.pdf
+alias pdfmerge='/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Resources/join.py -o output.pdf'
