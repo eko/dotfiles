@@ -34,7 +34,30 @@ function dataurl() {
 }
 
 # Returns useful information using dig tool
-function digga() {
+function diga() {
     dig +nocmd "$1" any +multiline +noall +answer;
 }
 
+# Returns information about usual subdomains
+function dig_in_parallel() {
+    dig=$(dig +noall +answer $1);
+
+    if [ -n "$dig" ]; then
+        echo "✔ $dig";
+    fi
+}
+
+function digscan() {
+    set +m;
+
+    subdomains=( alert adm admin administration api apis assets back backend blog bo board build builds ci cloud conf config configuration console contact contacts dashboard database db dev demo directory dl doc documentation download downloads elasticsearch endpoint elk exchange exchanges free files front frontend ftp gateway geo git gitlab github grafana graph graphs group home host hosting int integ integration jenkins jira kibana kube kubectl kubernetes light live logs mail manager market marketing mobile monitor monitoring mongo mongodb mysql open openshift opensource order orders partner partners preprod private prive postgres postgresql recette root share sales source sources stats status stream test vpn webmail wiki www )
+
+    echo "Checking...\n";
+
+    for subdomain in "${subdomains[@]}"; do
+        dig_in_parallel "$subdomain.$1" &
+    done
+
+    wait
+    set -m;
+}
