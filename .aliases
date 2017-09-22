@@ -5,22 +5,35 @@ alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias -- -="cd -"
 
+# URLs
+alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
+
 # cURL
 alias curltime="curl -w \"\nConnect: %{time_connect} TTFB: %{time_starttransfer} Total time: %{time_total} \n\""
 
-# Docker
-alias dce="docker-compose exec"
-
 # Recursively delete `.DS_Store` files
 alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
+
+# Docker
+alias doc="docker-compose"
+alias doce="docker-compose exec"
+
+# DNS
+alias dnsclear="dscacheutil -flushcache && killall -HUP mDNSResponder"
 
 # IP addresses
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias localip="ipconfig getifaddr en7"
 alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
 
+# Lock screen when going AFK
+alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
+
 # Network interfaces
 alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
+
+# Copies public key to clipboard
+alias pubkey="cat ~/.ssh/id_rsa.pub | pbcopy | echo '-> Public key copied to clipboard.'"
 
 # Updates macOS applications and updates Homebrew packages
 alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup'

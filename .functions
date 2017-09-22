@@ -50,7 +50,7 @@ function dig_in_parallel() {
 function digscan() {
     set +m;
 
-    subdomains=( alert adm admin administration api apis assets back backend blog bo board build builds ci cloud conf config configuration console contact contacts dashboard database db dev demo directory dl doc documentation download downloads elasticsearch endpoint elk exchange exchanges free files front frontend ftp gateway geo git gitlab github grafana graph graphs group home host hosting int integ integration jenkins jira kibana kube kubectl kubernetes light live logs mail manager market marketing mobile monitor monitoring mongo mongodb mysql open openshift opensource order orders partner partners preprod private prive postgres postgresql recette root share sales source sources stats status stream test vpn webmail wiki www )
+    subdomains=( a alert adm admin administration api apis api-gateway assets b back backend b2b b2c black blog bo board brown build builds c cache cached ceph cli client clients ci cloud conf config configuration console consul contact contacts contract contracts cust customer customers d dark dashboard database db dev demo directory display dl dns doc documentation domain domains download downloads e elasticsearch endpoint elk exchange exchanges ext extern external externals extra extranet f factory free files front frontend ftp g gateway geo git gitlab github go golang grafana graph graphs grey green group h health healths home host hosting hub hubs i int integ integration intra intranet j jenkins jira k kibana k8s kube kubectl kubernetes l light live logs m mail manager market marketing minio mobile monitor monitoring mongo mongodb mysql n nas new news no o open openshift opensource order orders p package packages packagist partner partners perso preprod priv private prive portal postgres postgresql pro pros purple q quality qualys r recette red redis reg registry rule rules root roots s s3 secret secrets share sale sales serv server servers smtp source sources ssh sso stat stats status storage store stream t test tests time timeline u v vault view views vol vols volume volumes vpn w web webmail white wiki work worker workers www x y yellow yes z zoo )
 
     echo "Checking...\n";
 
@@ -60,4 +60,14 @@ function digscan() {
 
     wait
     set -m;
+}
+
+# Generates a password and returns hashed values
+function genpasswd() {
+    passwd=`env LC_CTYPE=C tr -dc 'a-zA-Z0-9-_\$\?' < /dev/urandom | head -c 20`;
+    sha256=`echo $passwd | shasum -a 256`;
+    sha512=`echo $passwd | shasum -a 512`;
+    md5=`md5 -s $passwd | cut -d'=' -f2 | xargs`
+
+    echo "Raw: $passwd\n\nSHA256: $sha256\nSHA512: $sha512\n\nMD5: $md5";
 }

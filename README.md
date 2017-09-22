@@ -12,14 +12,18 @@ $ make install
 ```
 
 Here is the detail of available dotfiles:
-
-## [.vimrc](https://raw.github.com/eko/dotfiles/master/.vimrc)
-  * Install to `~/.vimrc`
-  * Type `vim +PlugInstall +qall` to install vim plugins
+## [.aliases](https://raw.github.com/eko/dotfiles/master/.aliases)
+  * Install to `~/.aliases`
 
 ## [.atom/config.cson](https://raw.github.com/eko/dotfiles/master/.atom/config.cson)
   * Download [Atom](https://atom.io)
   * Install to `~/.atom/config.cson`
+
+## [.editorconfig](https://raw.github.com/eko/dotfiles/master/.editorconfig)
+  * Install to `project/` directory
+
+## [.exports](https://raw.github.com/eko/dotfiles/master/.exports)
+  * Install to `~/.exports`
 
 ## [.gitconfig](https://raw.github.com/eko/dotfiles/master/.gitconfig)
   * Install to `~/.gitconfig`
@@ -28,8 +32,15 @@ Here is the detail of available dotfiles:
   * Install to `~/.gitignore`
   * Type `git config --global core.excludesfile ~/.gitignore`
 
-## [.editorconfig](https://raw.github.com/eko/dotfiles/master/.editorconfig)
-  * Install to `project/` directory
-
 ## [.hyper.js](https://raw.github.com/eko/dotfiles/master/.hyper.js)
   * Install to `~/.hyper.js`
+
+## [.sources](https://raw.github.com/eko/dotfiles/master/.sources)
+  * Install to `~/.sources`
+
+## [.vimrc](https://raw.github.com/eko/dotfiles/master/.vimrc)
+  * Install to `~/.vimrc`
+  * Type `vim +PlugInstall +qall` to install vim plugins
+
+## [.zshrc](https://raw.github.com/eko/dotfiles/master/.zshrc)
+  * Install to `~/.zshrc`
