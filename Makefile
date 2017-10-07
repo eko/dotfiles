@@ -11,6 +11,7 @@ install: ## Installs dotfiles into current environment
 	@$(MAKE) DOTFILE=.gitconfig install_file
 	@$(MAKE) DOTFILE=.gitignore install_file
 	@$(MAKE) DOTFILE=.hyper.js install_file
+	@$(MAKE) DOTFILE=.oh-my-zsh/themes/eko.zsh-theme install_file
 	@$(MAKE) DOTFILE=.sources install_file
 	@$(MAKE) DOTFILE=.vimrc install_file
 	@$(MAKE) DOTFILE=.zshrc install_file
