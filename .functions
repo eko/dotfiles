@@ -67,6 +67,13 @@ function digscan() {
     set -m;
 }
 
+# Automatically Starting tmux on SSH
+function ssht() {
+  SSH_HOST="${@: -1}"
+  tabname "$SSH_HOST"
+  ssh "$@" -t 'tmux ls && exec tmux a || exec tmux new || exec $SHELL -l'
+}
+
 # Generates a password and returns hashed values
 function genpasswd() {
     passwd=`env LC_CTYPE=C tr -dc 'a-zA-Z0-9-_\$\?' < /dev/urandom | head -c 20`;
