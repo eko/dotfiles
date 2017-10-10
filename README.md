@@ -41,6 +41,9 @@ Here is the detail of available dotfiles:
 ## [.sources](https://raw.github.com/eko/dotfiles/master/.sources)
   * Install to `~/.sources`
 
+## [.tmux.conf](https://raw.github.com/eko/dotfiles/master/.tmux.conf)
+  * Install to `~/.tmux.conf`
+
 ## [.vimrc](https://raw.github.com/eko/dotfiles/master/.vimrc)
   * Install to `~/.vimrc`
   * Type `vim +PlugInstall +qall` to install vim plugins

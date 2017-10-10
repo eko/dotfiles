@@ -13,6 +13,7 @@ install: ## Installs dotfiles into current environment
 	@$(MAKE) DOTFILE=.hyper.js install_file
 	@$(MAKE) DOTFILE=.oh-my-zsh/themes/eko.zsh-theme install_file
 	@$(MAKE) DOTFILE=.sources install_file
+	@$(MAKE) DOTFILE=.tmux.conf install_file
 	@$(MAKE) DOTFILE=.vimrc install_file
 	@$(MAKE) DOTFILE=.zshrc install_file
 
