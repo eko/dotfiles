@@ -19,6 +19,10 @@ Here is the detail of available dotfiles:
   * Download [Atom](https://atom.io)
   * Install to `~/.atom/config.cson`
 
+## [.brew](https://raw.github.com/eko/dotfiles/master/.brew)
+  * Install to `~/.brew`
+  * Then, run `./.brew` to install Homebrew libraries/applications
+
 ## [.editorconfig](https://raw.github.com/eko/dotfiles/master/.editorconfig)
   * Install to `project/` directory
 

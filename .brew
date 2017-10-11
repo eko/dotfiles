@@ -1,0 +1,122 @@
+#!/usr/bin/env bash
+
+# Link Homebrew casks in `/Applications` rather than `~/Applications`
+export HOMEBREW_CASK_OPTS='--appdir=/Applications'
+
+echo "--> Make sure we're using the latest Homebrew"
+brew update
+
+echo '--> Upgrade any already-installed formulae'
+brew upgrade
+
+echo '--> Install Homebrew-Cask'
+
+brew tap caskroom/cask
+
+echo '--> Install libraries and applications'
+
+# terminal
+brew cask install iterm2
+brew install bash
+brew install tmux
+brew install reattach-to-user-namespace
+brew install vim
+brew install zsh
+
+brew tap greymd/tools
+brew install tmux-xpanes
+
+# browser
+brew cask install google-chrome
+
+# openssl
+brew install openssl
+brew link openssl --force
+
+# python
+brew install python --with-brewed-openssl
+brew install python3 --with-brewed-openssl
+
+PIPS=(
+  flake8
+  httpie
+  pylint
+  virtualenv
+)
+
+"$(brew --prefix)/bin/pip" install --upgrade pip
+
+for pip in "${PIPS[@]}"; do
+  "$(brew --prefix)/bin/pip" list -l | grep "$pip" &>/dev/null || "$(brew --prefix)/bin/pip" install "$pip"
+done
+
+# ruby
+mkdir -p ~/.rubies
+
+brew install ruby-install
+brew install chruby
+
+RUBIES=(
+  2.4.2
+)
+
+for ruby in "${RUBIES[@]}"; do
+  "$(brew --prefix)/bin/ruby-install" --no-reinstall --rubies-dir ~/.rubies ruby "$ruby"
+done
+
+echo "${RUBIES[@]:(-1)}" > ~/.ruby-version
+
+GEMS=(
+  bundler
+  dotenv
+)
+
+# shellcheck source=/dev/null
+source "$(brew --prefix)/share/chruby/chruby.sh"
+chruby "$(cat ~/.ruby-version)"
+
+for gem in "${GEMS[@]}"; do
+  gem list -i "${gem}" &>/dev/null || gem install "${gem}"
+done
+
+# node.js
+brew install nodejs
+
+# go
+brew install go
+
+# devops
+brew cask install virtualbox
+brew cask install vagrant
+brew cask install docker
+
+# image/video
+brew cask install vlc
+
+# chat
+brew cask install slack
+
+# misc
+brew cask install gpgtools
+
+brew install autoenv
+brew install awscli
+brew install curl
+brew install fd
+brew install findutils --with-default-names
+brew install git
+brew install graphviz
+brew install htop-osx
+brew install jq
+brew install tcpdump
+brew install tig
+brew install tree
+brew install wget
+brew install zsh-syntax-highlighting
+
+echo '--> Link homebrew apps'
+brew linkapps
+
+echo '--> Cleanup !'
+brew cask cleanup
+brew cleanup
