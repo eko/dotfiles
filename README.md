@@ -1,5 +1,7 @@
 # dotfiles
 
+## Classic dotfiles
+
 These dotfiles can be installed by running the following Make command:
 
 ```bash
@@ -11,7 +13,26 @@ $ make install
 [...]
 ```
 
+## Encrypted dotfiles
+
+Before installing encrypted dotfiles, you have to import your private gpg key by typing:
+
+```bash
+$ gpg2 --import private.key
+```
+
+Then, encrypted Makefiles can be automatically installed by typing:
+
+```bash
+$ make install-encrypted
+
+✔ Installing encrypted file: /Users/vincent/.ssh/config
+```
+
+## List of dotfiles
+
 Here is the detail of available dotfiles:
+
 ## [.aliases](https://raw.github.com/eko/dotfiles/master/.aliases)
   * Install to `~/.aliases`
 

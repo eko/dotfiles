@@ -17,10 +17,21 @@ install: ## Installs dotfiles into current environment
 	@$(MAKE) DOTFILE=.vimrc install_file
 	@$(MAKE) DOTFILE=.zshrc install_file
 
+install-encrypted: ## Installs encrypted dotfiles into current environment
+	@$(MAKE) DOTFILE=.ssh/config install_encrypted_file
+
 install_file:
 	@if [ ! -f ${HOME}/${DOTFILE} ]; then \
 		echo ✔ Installing file: ${HOME}/${DOTFILE}; \
 		cp ${DOTFILE} ${HOME}/${DOTFILE}; \
+	else \
+		echo ✖ File already exists: ${HOME}/${DOTFILE}; \
+	fi \
+
+install_encrypted_file:
+	@if [ ! -f ${HOME}/${DOTFILE} ]; then \
+		echo ✔ Installing encrypted file: ${HOME}/${DOTFILE}; \
+		gpg2 --decrypt .encrypted/${DOTFILE} 2> /dev/null > ${HOME}/${DOTFILE}; \
 	else \
 		echo ✖ File already exists: ${HOME}/${DOTFILE}; \
 	fi \

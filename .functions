@@ -3,6 +3,32 @@ function b64() {
     echo -n "$*" | base64
 }
 
+function b64decode() {
+    echo -n "$*" | base64 --decode
+}
+
+# Usage: encrypt file <output> (default: file.gpg)
+function encrypt() {
+    output="$1.gpg"
+
+    if [ -n "$2" ]; then
+        output="$2"
+    fi
+
+    gpg2 --encrypt --recipient vincent --output $output $1
+}
+
+# Usage: decrypt file <output>
+function decrypt() {
+    command="gpg2 --decrypt $1"
+
+    if [ -n "$2" ]; then
+        command="$command > $2"
+    fi
+
+    eval $command
+}
+
 # Clones if a Git repository is given, elsewhere just cd
 function cdc() {
     name=`sed -e 's/.*\///g' <<< $1`
