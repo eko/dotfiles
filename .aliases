@@ -19,7 +19,7 @@ alias doc="docker-compose"
 alias doce="docker-compose exec"
 
 # DNS
-alias dnsclear="dscacheutil -flushcache && killall -HUP mDNSResponder"
+alias dnsclear="dscacheutil -flushcache && sudo killall -HUP mDNSResponder"
 
 # IP addresses
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
