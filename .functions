@@ -7,6 +7,11 @@ function b64decode() {
     echo -n "$*" | base64 --decode
 }
 
+# Preview CSVs
+function csvpreview() {
+    sed 's/,,/, ,/g;s/,,/, ,/g' "$@" | column -s, -t | less -#2 -N -S
+}
+
 # Usage: encrypt file <output> (default: file.gpg)
 function encrypt() {
     output="$1.gpg"
