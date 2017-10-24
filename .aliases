@@ -39,6 +39,9 @@ alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'
 # Copies public key to clipboard
 alias pubkey="cat ~/.ssh/id_rsa.pub | pbcopy | echo '-> Public key copied to clipboard.'"
 
+# Starts a timer
+alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
+
 # Updates macOS applications and updates Homebrew packages
 alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup'
 
