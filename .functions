@@ -7,11 +7,6 @@ function b64decode() {
     echo -n "$*" | base64 --decode
 }
 
-# Opens a file with Visual Studio Code
-function code() {
-    VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $*
-}
-
 # Preview CSVs
 function csvpreview() {
     sed 's/,,/, ,/g;s/,,/, ,/g' "$@" | column -s, -t | less -#2 -N -S

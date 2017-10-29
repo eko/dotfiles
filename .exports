@@ -2,5 +2,8 @@
 export GOPATH="$HOME/golang"
 export GOBIN="$GOPATH/bin"
 
+# Visual Studio Code
+export CODEPATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+
 # PATH
-export PATH="$PATH:$GOBIN"
+export PATH="$PATH:$GOBIN:$CODEPATH"
