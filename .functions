@@ -98,6 +98,21 @@ function digscan() {
     set -m;
 }
 
+# Sets FDN (French Data Network) open DNS servers on a network interface
+function opendns() {
+    echo "Select the network interface:\n1) Belkin USB-C LAN\n2) Wi-Fi"
+    read n
+
+    case $n in
+        1) selected="Belkin USB-C LAN";;
+        2) selected="Wi-Fi";;
+        *) echo "Invalid option"; return;;
+    esac
+
+    echo "\n-> Setting open DNS servers on network interface '$selected'"
+    networksetup -setdnsservers $selected 80.67.169.12 80.67.169.40
+}
+
 # Automatically Starting tmux on SSH
 function ssht() {
   SSH_HOST="${@: -1}"
