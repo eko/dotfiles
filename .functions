@@ -7,6 +7,17 @@ function b64decode() {
     echo -n "$*" | base64 --decode
 }
 
+# Usage: bitcoinalert 9800
+function bitcoinalert() {
+    while true; do
+        value=$(bitcoin)
+
+        if (( $(echo "$value > $1" | bc -l) )); then
+            osascript -e "display notification "$value" with title \"Bitcoin alert\" subtitle \"Current value:\"";
+        fi
+    done
+}
+
 # Preview CSVs
 function csvpreview() {
     sed 's/,,/, ,/g;s/,,/, ,/g' "$@" | column -s, -t | less -#2 -N -S
@@ -195,4 +206,3 @@ transfer() {
     echo "\n";
     rm -f $tmpfile;
 }
-
