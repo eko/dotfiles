@@ -1,3 +1,9 @@
+# Common
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+NC='\033[0m'
+
 # Base64 encode a string
 function b64() {
     echo -n "$*" | base64
@@ -7,14 +13,46 @@ function b64decode() {
     echo -n "$*" | base64 --decode
 }
 
-# Usage: bitcoinalert 9800
-function bitcoinalert() {
-    while true; do
-        value=$(bitcoin)
+# Usage: crypto <money> <currency>
+function crypto() {
+    curl -s https://api.cryptonator.com/api/ticker/$1-$2 | jq -r '.ticker .price'
+}
 
-        if (( $(echo "$value > $1" | bc -l) )); then
-            osascript -e "display notification "$value" with title \"Bitcoin alert\" subtitle \"Current value:\"";
+# Usage: cryptowatch <money> <currency> [<wallet amount> [<alert amount>]]
+function cryptowatch() {
+    latest=0
+
+    while true; do
+        value=$(crypto $1 $2)
+        current=`printf "%.2f" $(( value ))`
+        date=$(date "+%H:%M:%S")
+        operator="${YELLOW}=${NC}"
+        walletvalue=0
+
+        # Find operator
+        if (( $(echo "$value > $latest" | bc -l) )); then
+            operator="${GREEN}⬆${NC}"
+        elif (( $(echo "$value < $latest" | bc -l) )); then
+            operator="${RED}⬇${NC}"
         fi
+
+        latest=$value
+
+        display="$operator | $date | $1: ${YELLOW}$current${NC}"
+
+        if [ -n "$3" ]; then
+            walletvalue=`printf "%.2f" $(( $3 * $value ))`
+            display="$display | $2: ${YELLOW}$walletvalue${NC}"
+        fi
+
+        echo $display
+
+        # Amount reached? Notify
+        if [ -n "$4" ] && (( $(echo "$value >= $4" | bc -l) )); then
+            osascript -e "display notification "$value" with title \"Cryptowatch\" subtitle \"Current value:\""
+        fi
+
+        sleep 15
     done
 }
 
