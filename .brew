@@ -18,6 +18,7 @@ echo '--> Install libraries and applications'
 # terminal
 brew cask install iterm2
 brew install bash
+brew install ffmpeg
 brew install tmux
 brew install reattach-to-user-namespace
 brew install vim

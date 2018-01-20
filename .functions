@@ -147,6 +147,15 @@ function digscan() {
     set -m;
 }
 
+# Transforms a video file to a gif
+# Usage: gify <input file> <output file> <start> <duration> [<ratio> <fps>]
+function gify {
+    ratio=${5:-480:270}
+    fpm=${6:-60}
+
+    ffmpeg -i $1 -vf scale=$ratio -r $fpm -ss $3 -t $4 $2
+}
+
 # Sets FDN (French Data Network) open DNS servers on a network interface
 function opendns() {
     echo "Select the network interface:\n1) Belkin USB-C LAN\n2) Wi-Fi"
@@ -159,7 +168,7 @@ function opendns() {
     esac
 
     echo "\n-> Setting open DNS servers on network interface '$selected'"
-    networksetup -setdnsservers $selected 80.67.169.12 80.67.169.40
+    networksetup -setdnsservers $selected 9.9.9.9 8.8.8.8
 }
 
 # Automatically Starting tmux on SSH
