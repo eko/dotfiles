@@ -94,8 +94,9 @@ brew cask install docker
 # image/video
 brew cask install vlc
 
-# chat
+# tools
 brew cask install slack
+brew cask install tableplus
 
 # misc
 brew cask install gpgtools
