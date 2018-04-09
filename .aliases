@@ -5,6 +5,10 @@ alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias -- -='cd -'
 
+# Kubernetes
+alias k='kubectl'
+alias ksys='kubectl -n kube-system'
+
 # URLs
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 
