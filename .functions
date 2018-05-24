@@ -156,6 +156,17 @@ function gify {
     ffmpeg -i $1 -vf scale=$ratio -r $fpm -ss $3 -t $4 $2
 }
 
+# Usage: lighthouse <url> <json | html>
+function lighthouse {
+    result=`curl -s https://builder-dot-lighthouse-ci.appspot.com/stream\?url=$1\&format=$2 | grep done | cut -d' ' -f3`
+
+    if [[ $2 == "json" ]]; then
+        curl -s $result
+    else
+        echo "Report available: $result"
+    fi
+}
+
 # Sets Cloudflare DNS servers on a network interface
 function opendns() {
     echo "Select the network interface:\n1) Belkin USB-C LAN\n2) Wi-Fi"
