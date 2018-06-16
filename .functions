@@ -177,8 +177,6 @@ function selectnetworkinterface() {
         2) selected="Wi-Fi";;
         *) echo "Invalid option"; return;;
     esac
-
-    return $selected
 }
 
 # Sets Cloudflare DNS servers on a network interface
@@ -186,7 +184,7 @@ function opendns() {
     selectnetworkinterface
 
     echo "\n-> Setting open DNS servers on network interface '$selected'"
-    networksetup -setdnsservers $selected 1.1.1.1 1.0.0.1
+    networksetup -setdnsservers "$selected" 1.1.1.1 1.0.0.1
 }
 
 # Sets SSH proxy on a network interface
@@ -196,8 +194,9 @@ function sshproxy() {
     selectnetworkinterface
 
     if [[ $1 == "stop" ]]; then
-        networksetup -setsocksfirewallproxystate $selected off
+        networksetup -setsocksfirewallproxystate "$selected" off
         ps x | grep "[s]sh -fN -D 5000" | awk '{print $1}' | xargs kill -9
+        export http_proxy= https_proxy=
 
         echo "\n-> Done: proxy is stopped and SSH connection is closed"
 
@@ -207,7 +206,9 @@ function sshproxy() {
     echo "\n-> Setting socks proxy on network interface '$selected'"
 
     ssh -fN -D 5000 $1
-    networksetup -setsocksfirewallproxy $selected localhost 5000
+    networksetup -setsocksfirewallproxy "$selected" localhost 5000
+    networksetup -setsocksfirewallproxystate "$selected" on
+    export http_proxy=socks5://127.0.0.1:5000 https_proxy=socks5://127.0.0.1:5000
 
     echo "-> Done: proxy is ready"
 }
