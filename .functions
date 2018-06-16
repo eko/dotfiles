@@ -276,7 +276,7 @@ function loc() {
 
 # Uploads a file to transfer.sh and returns the public URL
 # Usage: transfer <file>
-transfer() {
+function transfer() {
     if [ $# -eq 0 ]; then
         echo -e "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md";
         return 1;
@@ -294,4 +294,16 @@ transfer() {
     cat $tmpfile;
     echo "\n";
     rm -f $tmpfile;
+}
+
+# Graph ping between host and a given hostname
+# Usage: ping <host>
+function pingraph {
+    while true; do echo '{"value": '`ping -c 1 $1 | awk -F"=| " 'NR==2 {print $10}'`'}'; sleep 0.5; done | jplot value
+}
+
+# Graph (using curl and jplot) website response times
+# Usage: wwwgraph <url>
+function wwwgraph {
+    while true; do curl -s -o /dev/null -w '{"lookup": %{time_namelookup}, "connect": %{time_connect}, "appconnect": %{time_appconnect}, "pretransfer": %{time_pretransfer}, "redirect": %{time_redirect}, "starttransfer": %{time_starttransfer}, "total": %{time_total}}' $1 | sed -E 's/([0-9]),([0-9])/\1.\2/g'; sleep 1.5; done | jplot lookup+connect+appconnect+pretransfer+redirect+starttransfer+total
 }
