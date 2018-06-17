@@ -299,24 +299,62 @@ function transfer() {
 # Graph ping between host and a given hostname
 # Usage: pinggraph <host>
 function pinggraph {
-    while true; do echo '{"ping": '`ping -c 1 $1 | awk -F"=| " 'NR==2 {print $10}'`'}'; sleep 0.2; done | jplot --steps 500 ping
+    while true; \
+        do echo '{"ping": '`ping -c 1 $1 | awk -F"=| " 'NR==2 {print $10}'`'}'; \
+        sleep 0.2; \
+    done | \
+    jplot --steps 500 ping
 }
 
 # Graph (using curl and jplot) website response times
 # Usage: wwwgraph <url>
 function wwwgraph {
-    while true; do curl -s -o /dev/null -w '{"lookup": %{time_namelookup}, "connect": %{time_connect}, "appconnect": %{time_appconnect}, "pretransfer": %{time_pretransfer}, "redirect": %{time_redirect}, "starttransfer": %{time_starttransfer}, "total": %{time_total}}' $1 | sed -E 's/([0-9]),([0-9])/\1.\2/g'; sleep 1.5; done | jplot lookup+connect+appconnect+pretransfer+redirect+starttransfer+total
+    while true; \
+        do curl -s -o /dev/null -w '{"lookup": %{time_namelookup}, "connect": %{time_connect}, "appconnect": %{time_appconnect}, "pretransfer": %{time_pretransfer}, "redirect": %{time_redirect}, "starttransfer": %{time_starttransfer}, "total": %{time_total}}' $1 | \
+        sed -E 's/([0-9]),([0-9])/\1.\2/g'; \
+        sleep 1.5; \
+    done | \
+    jplot lookup+connect+appconnect+pretransfer+redirect+starttransfer+total
 }
 
 # Graph a process CPU and memory usage
 # Usage: processgraph <process name> (Chrome, node, ...)
 function processgraph {
-    while true; do ps aux | grep $1 | grep -v grep | awk '{ cpu += $3; mem += $4} END {print "{\"cpu\":"cpu",\"mem\":"mem"}"}' | sed -E 's/([0-9]),([0-9])/\1.\2/g'; sleep 0.2; done | jplot --steps 600 cpu+mem
+    while true; \
+        do ps aux | \
+        grep -E "$1" | \
+        grep -v grep | \
+        awk '{ cpu += $3; mem += $4} END {print "{\"cpu\":"cpu",\"mem\":"mem"}"}' | \
+        sed -E 's/([0-9]),([0-9])/\1.\2/g'; \
+        sleep 0.2; \
+    done | \
+    jplot --steps 600 cpu+mem
 }
 
 # Graph a process CPU and memory usage over SSH
 # Usage: sshprocessgraph <host> <process name> (Chrome, node, ...)
 function sshprocessgraph {
-    subcommand='ps aux | grep '"$2"' | grep -v grep | awk '\''{ cpu += $3; mem += $4} END {print "{\"cpu\":"cpu",\"mem\":"mem"}"}'\'' | sed -E "s/([0-9]),([0-9])/\1.\2/g"'
-    while true; do ssh $1 "$subcommand"; sleep 1; done | jplot --steps 400 cpu+mem
+    subcommand='ps aux | \
+        grep -E '\"$2\"' | \
+        grep -v grep | \
+        awk '\''{ cpu += $3; mem += $4} END {print "{\"cpu\":"cpu",\"mem\":"mem"}"}'\'' | \
+        sed -E "s/([0-9]),([0-9])/\1.\2/g"'
+
+    ssh $1 "while true; \
+            do $subcommand; \
+            sleep 0.2; \
+        done" | \
+    jplot --steps 600 cpu+mem
+}
+
+# Graph a RabbitMQ queue information
+# Usage: rabbitgraph <api hostname> <username> <password> <vhost> <queue>
+function rabbitgraph {
+    while true; \
+        do curl -s -u $2:$3 $1/api/queues/$4/$5 | \
+        jq -r '.messages_ready //=0 | .messages_unacknowledged //=0 | .messages //=0 | .consumers //=0 | .message_stats.publish_details.rate //=0 | .message_stats.ack_details.rate //=0 | .message_stats.redeliver_details.rate //=0' | \
+        jq -r '"{\"ready\":\(.messages_ready), \"unacked\":\(.messages_unacknowledged), \"total\":\(.messages), \"consumers\":\(.consumers), \"publish_rate\":\(.message_stats.publish_details.rate), \"ack_rate\":\(.message_stats.ack_details.rate), \"redeliver_rate\":\(.message_stats.redeliver_details.rate)}"'; \
+        sleep 0.3;
+    done | \
+    jplot --steps 1200 ready+unacked+total+consumers+publish_rate+ack_rate+redeliver_rate
 }
