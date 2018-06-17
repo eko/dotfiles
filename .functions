@@ -309,7 +309,14 @@ function wwwgraph {
 }
 
 # Graph a process CPU and memory usage
-# Usage: processgraph <name> (Chrome, node, ...)
+# Usage: processgraph <process name> (Chrome, node, ...)
 function processgraph {
     while true; do ps aux | grep $1 | grep -v grep | awk '{ cpu += $3; mem += $4} END {print "{\"cpu\":"cpu",\"mem\":"mem"}"}' | sed -E 's/([0-9]),([0-9])/\1.\2/g'; sleep 0.2; done | jplot --steps 600 cpu+mem
+}
+
+# Graph a process CPU and memory usage over SSH
+# Usage: sshprocessgraph <host> <process name> (Chrome, node, ...)
+function sshprocessgraph {
+    subcommand='ps aux | grep '"$2"' | grep -v grep | awk '\''{ cpu += $3; mem += $4} END {print "{\"cpu\":"cpu",\"mem\":"mem"}"}'\'' | sed -E "s/([0-9]),([0-9])/\1.\2/g"'
+    while true; do ssh $1 "$subcommand"; sleep 1; done | jplot --steps 400 cpu+mem
 }
