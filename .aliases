@@ -25,6 +25,9 @@ alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
 alias doc="docker-compose"
 alias doce="docker-compose exec"
 
+# Golang list imports recursively in a project
+alias golist='go list -f "$(printf '"'"'{{.ImportPath}}:\n{{range .Imports}}  {{.}}\n{{end}}'"'"')" ${1+"$@"}'
+
 # DNS
 alias dnsclear="dscacheutil -flushcache && sudo killall -HUP mDNSResponder"
 
