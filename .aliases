@@ -46,6 +46,12 @@ alias showdesktop='defaults write com.apple.finder CreateDesktop -bool true && k
 # Network interfaces
 alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
 
+# Run old PHP versions using docker
+alias php54='docker run --rm -it -v $(pwd):$(pwd) -w $(pwd) jolicode/php54 php'
+
+# PHPStan CLI tool using docker
+alias phpstan='docker run -v $PWD:/app --rm phpstan/phpstan'
+
 # Copies public key to clipboard
 alias pubkey="cat ~/.ssh/id_rsa.pub | pbcopy | echo '-> Public key copied to clipboard.'"
 
