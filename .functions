@@ -13,6 +13,11 @@ function b64decode() {
     echo -n "$*" | base64 --decode
 }
 
+# Usage: cht language/something
+function cht() {
+    curl cht.sh/$*
+}
+
 # Usage: crypto <money> <currency>
 function crypto() {
     curl -s https://api.cryptonator.com/api/ticker/$1-$2 | jq -r '.ticker .price'
