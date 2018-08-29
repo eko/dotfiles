@@ -18,9 +18,6 @@ alias bitcoin='curl -s https://api.cryptowat.ch/markets/summaries | jq ".result.
 # cURL
 alias curltime="curl -w \"\nConnect: %{time_connect} TTFB: %{time_starttransfer} Total time: %{time_total} \n\""
 
-# Recursively delete `.DS_Store` files
-alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
-
 # Docker
 alias doc="docker-compose"
 alias doce="docker-compose exec"
