@@ -1,5 +1,6 @@
 [core]
     editor = vim
+    filemode = true
 [user]
     name = Vincent Composieux
     email = vincent@composieux.fr
@@ -87,3 +88,8 @@
     pushNonFastForward = false
     implicitIdentity = false
     detachedHead = false
+[credential]
+    helper = cache --timeout 7200
+[pager]
+    diff = diff-so-fancy | less --tabs=1,5 -RFX
+    show = diff-so-fancy | less --tabs=1,5 -RFX
