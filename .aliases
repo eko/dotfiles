@@ -5,6 +5,18 @@ alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias -- -='cd -'
 
+# bat > cat
+alias cat='bat'
+
+# prettyping
+alias ping='prettyping --nolegend'
+
+# ncdu
+alias ncdu='ncdu --color dark -rr -x --exclude .git --exclude node_modules'
+
+# fzf preview (also using bat)
+alias preview="fzf --preview 'bat --color \"always\" {}'"
+
 # Kubernetes
 alias k='kubectl'
 alias ksys='kubectl -n kube-system'
