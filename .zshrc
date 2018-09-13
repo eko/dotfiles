@@ -89,7 +89,9 @@ source $ZSH/oh-my-zsh.sh
 [[ -f /usr/local/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh ]] && . /usr/local/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh
 
 # Load extra dotflies
-for file in ~/.{exports,aliases,sources}; do
+for file in ~/.{exports,aliases,functions,sources}; do
    [ -r "$file" ] && [ -f "$file" ] && source "$file";
 done;
 unset file;
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
