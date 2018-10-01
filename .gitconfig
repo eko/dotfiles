@@ -25,9 +25,12 @@
 [alias]
     a = add
     aa = add --all :/
+    authors = shortlog -sn --no-merges
     b = branch -avv
     bd = branch -d
     bm = branch -m
+    brd = !git branch --merged | grep -v master && echo "Type 'git brdf' to delete all these branches"
+    brdf = !git branch --merged | grep -v master | xargs git branch -d
     ci = commit
     cia = commit --amend
     ciaa = commit --all --amend
@@ -51,7 +54,8 @@
     lc = log --oneline --decorate --graph --left-right
     lch = !git log --oneline --decorate --graph --left-right HEAD...$1
     lf = log --oneline --decorate --follow --
-    lg = log --oneline --decorate --graph
+    lga = log --graph --pretty=tformat:'%Cred%h%Creset -%C(yellow)%d%Creset%s %Cgreen(%an %cd)%Creset' --abbrev-commit --date=iso
+    lg = log --graph --pretty=tformat:'%Cred%h%Creset -%C(yellow)%d%Creset%s %Cgreen(%an %cr)%Creset' --abbrev-commit --date=relative
     m = merge
     n = config --local user.name
     r = rebase
