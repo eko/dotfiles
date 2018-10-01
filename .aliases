@@ -34,6 +34,8 @@ alias curltime="curl -w \"\nConnect: %{time_connect} TTFB: %{time_starttransfer}
 alias doc="docker-compose"
 alias doce="docker-compose exec"
 
+alias dockerip="docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'"
+
 # Golang list imports recursively in a project
 alias golist='go list -f "$(printf '"'"'{{.ImportPath}}:\n{{range .Imports}}  {{.}}\n{{end}}'"'"')" ${1+"$@"}'
 
