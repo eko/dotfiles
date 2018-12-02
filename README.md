@@ -50,6 +50,9 @@ Here is the detail of available dotfiles:
 ## [.exports](https://raw.github.com/eko/dotfiles/master/.exports)
   * Install to `~/.exports`
 
+## [.functions](https://raw.github.com/eko/dotfiles/master/.functions)
+  * Install to `~/.functions`
+
 ## [.gitconfig](https://raw.github.com/eko/dotfiles/master/.gitconfig)
   * Install to `~/.gitconfig`
 
