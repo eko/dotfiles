@@ -5,11 +5,16 @@ alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias -- -='cd -'
 
+alias vssh='cd ~/dev; vagrant ssh'
+
 # bat > cat
 alias cat='bat'
 
 # prettyping
 alias ping='prettyping --nolegend'
+
+# display listening ports
+alias ports='sudo lsof -PiTCP -sTCP:LISTEN'
 
 # ncdu
 alias ncdu='ncdu --color dark -rr -x --exclude .git --exclude node_modules'
