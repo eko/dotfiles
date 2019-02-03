@@ -1,12 +1,14 @@
 # Golang
 export GOPATH="$HOME/golang"
 export GOBIN="$GOPATH/bin"
+export GOROOT="/usr/local/Cellar/go/1.11.5/libexec"
 
 # Visual Studio Code
 export CODEPATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
 # PATH
 export PATH="$PATH:$GOBIN:$CODEPATH"
+export PATH="/usr/local/opt/curl/bin:$PATH"
 
 # add support for ctrl+o to open selected file in VS Code
 export FZF_DEFAULT_OPTS="--bind='ctrl-o:execute(code {})+abort'"
