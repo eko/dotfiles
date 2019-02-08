@@ -25,56 +25,49 @@ function cleanup() {
     fd -t d '(cache|log)' ~/dev ~ | grep -E '(app|var)/(cache|log)' | xargs rm -rf
 }
 
-# Usage: crypto <money> <currency>
-function crypto() {
-    curl -s https://api.cryptonator.com/api/ticker/$1-$2 | jq -r '.ticker .price'
-}
-
-# Usage: cryptowatch <money> <currency> [<wallet amount> [<alert amount>]]
-function cryptowatch() {
-    latest=0
-
-    while true; do
-        value=$(crypto $1 $2)
-        current=`printf "%.2f" $(( value ))`
-        date=$(date "+%H:%M:%S")
-        operator="${YELLOW}=${NC}"
-        walletvalue=0
-
-        # Find operator
-        if (( $(echo "$value > $latest" | bc -l) )); then
-            operator="${GREEN}⬆${NC}"
-        elif (( $(echo "$value < $latest" | bc -l) )); then
-            operator="${RED}⬇${NC}"
-        fi
-
-        latest=$value
-
-        display="$operator | $date | $1: ${YELLOW}$current${NC}"
-
-        if [ -n "$3" ]; then
-            walletvalue=`printf "%.2f" $(( $3 * $value ))`
-            display="$display | $2: ${YELLOW}$walletvalue${NC}"
-        fi
-
-        echo $display
-
-        # Amount reached? Notify
-        if [ -n "$4" ] && (( $(echo "$value >= $4" | bc -l) )); then
-            osascript -e "display notification "$value" with title \"Cryptowatch\" subtitle \"Current value:\""
-        fi
-
-        sleep 15
-    done
-}
-
 # Preview CSVs
 function csvpreview() {
     sed 's/,,/, ,/g;s/,,/, ,/g' "$@" | column -s, -t | less -#2 -N -S
 }
 
-# Usage: encrypt file <output> (default: file.gpg)
+# Usage: encrypt <string>
+# Then, a password is prompted
 function encrypt() {
+    input=$*
+    if [ -z "$input" ]; then
+        input=`cat </dev/stdin`
+        echo -e "$input"
+        echo -e "------------${NC}"
+    fi
+
+    result=`echo -n "$input" | openssl enc -e -aes-256-cbc -a`
+    lines=`echo -n $result | wc -l`
+
+    if [ ${lines} -ge 10 ]; then
+        filename="output.enc"
+        echo "$result" > $filename
+        echo -e "------------\n${YELLOW}Encrypted output has been stored into following file:${NC}"
+        echo -e "$filename"
+        echo -e "------------"
+        echo -e "${YELLOW}To decrypt the value, use:"
+        echo -e "${GREEN}\$${NC} cat \"$filename\" | openssl base64 -d | openssl enc -d -aes-256-cbc"
+    else
+        echo -e "------------\n${YELLOW}Encrypted output:${NC}"
+        echo -e "$result"
+        echo -e "------------"
+        echo -e "${YELLOW}To decrypt the value, use:"
+        echo -e "${GREEN}\$${NC} echo \"$result\" | openssl base64 -d | openssl enc -d -aes-256-cbc"
+    fi
+}
+
+# Usage: decrypt <string>
+# Then, a password is prompted
+function decrypt() {
+    echo "$*" | openssl base64 -d | openssl enc -d -aes-256-cbc
+}
+
+# Usage: encryptfile <filepath> <output> (default: file.gpg)
+function encryptfile() {
     output="$1.gpg"
 
     if [ -n "$2" ]; then
@@ -84,8 +77,8 @@ function encrypt() {
     gpg2 --encrypt --recipient vincent --output $output $1
 }
 
-# Usage: decrypt file <output>
-function decrypt() {
+# Usage: decryptfile <filepath> <output>
+function decryptfile() {
     command="gpg2 --decrypt $1"
 
     if [ -n "$2" ]; then
