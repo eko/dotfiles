@@ -6,6 +6,7 @@ help:
 install: ## Installs dotfiles into current environment
 	@$(MAKE) DOTFILE=.aliases install_file
 	@$(MAKE) DOTFILE=.atom/config.cson install_file
+	@$(MAKE) DOTFILE=.brew install_file
 	@$(MAKE) DOTFILE=.exports install_file
 	@$(MAKE) DOTFILE=.functions install_file
 	@$(MAKE) DOTFILE=.gitconfig install_file
@@ -35,3 +36,18 @@ install_encrypted_file:
 	else \
 		echo ✖ File already exists: ${HOME}/${DOTFILE}; \
 	fi \
+
+retrieve-files: ## Synchronize files from local host to git repository
+	cp ~/.aliases .aliases
+	cp ~/.brew .brew
+	cp ~/.atom/config.cson .atom/config.cson
+	cp ~/.exports .exports
+	cp ~/.functions .functions
+	cp ~/.gitconfig .gitconfig
+	cp ~/.gitignore .gitignore
+	cp ~/.hyper.js .hyper.js
+	cp ~/.oh-my-zsh/themes/eko.zsh-theme .oh-my-zsh/themes/eko.zsh-theme
+	cp ~/.sources .sources
+	cp ~/.tmux.conf .tmux.conf
+	cp ~/.vimrc .vimrc
+	cp ~/.zshrc .zshrc
