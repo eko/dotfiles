@@ -52,3 +52,5 @@ retrieve-files: ## Synchronize files from local host to git repository
 	cp ~/.tmux.conf .tmux.conf
 	cp ~/.vimrc .vimrc
 	cp ~/.zshrc .zshrc
+	gpg2 --encrypt --recipient vincent --output .encrypted/.ssh/config ~/.ssh/config
+	gpg2 --encrypt --recipient vincent --output .encrypted/.otpkeys ~/.otpkeys
