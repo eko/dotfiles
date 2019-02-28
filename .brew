@@ -23,6 +23,7 @@ brew install ffmpeg
 brew install fzf
 brew install rs/tap/jaggr
 brew install rs/tap/jplot
+brew install oath-toolkit
 brew install prettyping
 brew install ncdu
 brew install tmux

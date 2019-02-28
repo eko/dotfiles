@@ -20,6 +20,7 @@ install: ## Installs dotfiles into current environment
 
 install-encrypted: ## Installs encrypted dotfiles into current environment
 	@$(MAKE) DOTFILE=.ssh/config install_encrypted_file
+	@$(MAKE) DOTFILE=.otpkeys install_encrypted_file
 
 install_file:
 	@if [ ! -f ${HOME}/${DOTFILE} ]; then \

@@ -279,6 +279,28 @@ function loc() {
   echo "${fg[white]}Total${reset_color} lines of code: ${fg[yellow]}$total${reset_color}"
 }
 
+# Returns 2FA code
+# Usage: otp <service name>
+function otp() {
+    if [ -z $1 ]; then
+        echo
+        echo "Usage:"
+        echo "   otp google"
+        echo
+        echo "Configuration: $HOME/.otpkeys"
+        echo "Format: name=key"
+        return 1;
+    fi
+
+    OTPKEY=$(sed -n "s/${1}=//p" ~/.otpkeys)
+    if [ -z $OTPKEY ]; then
+        echo "$(basename $0): Unknown service name '$1'"
+        return 1;
+    fi
+
+    oathtool --totp -b $OTPKEY
+}
+
 # Uploads a file to transfer.sh and returns the public URL
 # Usage: transfer <file>
 function transfer() {
