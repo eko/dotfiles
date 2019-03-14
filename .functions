@@ -392,3 +392,8 @@ function kforward {
     podName=`kubectl get pods -n $2 --context $1 | grep $3 | cut -d' ' -f1`
     kubectl port-forward --context=$1 -n $2 $podName $4
 }
+
+# Usage: swap <file1> <file2>
+function swap() {
+    mv $1 $1.tmp && mv $2 $1 && mv $1.tmp $2;
+}
