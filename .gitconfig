@@ -62,6 +62,7 @@
     ri = rebase --interactive
     rc = rebase --continue
     ra = rebase --abort
+    rmcommit = !git rebase --onto $1^ $1
     rs = rebase --skip
     rv = remote -v
     s = status -sb
