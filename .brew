@@ -21,6 +21,7 @@ brew install bash
 brew install bat
 brew install ffmpeg
 brew install fzf
+brew install grc
 brew install rs/tap/jaggr
 brew install rs/tap/jplot
 brew install oath-toolkit
