@@ -411,3 +411,8 @@ function kdiff {
 function swap() {
     mv $1 $1.tmp && mv $2 $1 && mv $1.tmp $2;
 }
+
+# Usage: ddiff <source> <dest>
+function ddiff() {
+    diff $1 $2 | vim -R -
+}
