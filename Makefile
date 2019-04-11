@@ -11,7 +11,6 @@ install: ## Installs dotfiles into current environment
 	@$(MAKE) DOTFILE=.functions install_file
 	@$(MAKE) DOTFILE=.gitconfig install_file
 	@$(MAKE) DOTFILE=.gitignore install_file
-	@$(MAKE) DOTFILE=.hyper.js install_file
 	@$(MAKE) DOTFILE=.oh-my-zsh/themes/eko.zsh-theme install_file
 	@$(MAKE) DOTFILE=.sources install_file
 	@$(MAKE) DOTFILE=.tmux.conf install_file
@@ -46,7 +45,6 @@ retrieve-files: ## Synchronize files from local host to git repository
 	cp ~/.functions .functions
 	cp ~/.gitconfig .gitconfig
 	cp ~/.gitignore .gitignore
-	cp ~/.hyper.js .hyper.js
 	cp ~/.oh-my-zsh/themes/eko.zsh-theme .oh-my-zsh/themes/eko.zsh-theme
 	cp ~/.sources .sources
 	cp ~/.tmux.conf .tmux.conf

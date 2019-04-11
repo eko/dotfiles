@@ -60,9 +60,6 @@ Here is the detail of available dotfiles:
   * Install to `~/.gitignore`
   * Type `git config --global core.excludesfile ~/.gitignore`
 
-## [.hyper.js](https://raw.github.com/eko/dotfiles/master/.hyper.js)
-  * Install to `~/.hyper.js`
-
 ## [.oh-my-zsh/themes/eko.zsh-theme](https://raw.github.com/eko/dotfiles/master/.oh-my-zsh/themes/eko.zsh-theme)
   * Install to `~/.oh-my-zsh/themes/eko.zsh-theme`
 
