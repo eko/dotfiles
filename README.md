@@ -60,6 +60,10 @@ Here is the detail of available dotfiles:
   * Install to `~/.gitignore`
   * Type `git config --global core.excludesfile ~/.gitignore`
 
+## [.iTerm2/com.googlecode.iterm2.plist](https://raw.github.com/eko/dotfiles/master/.iTerm2/com.googlecode.iterm2.plist)
+  * Install to `~/.iTerm2/com.googlecode.iterm2.plist`
+  * Do not forget to configure iTerm2 (Preferences > General) at the bottom to load configuration from `~/.iTerm2` directory
+
 ## [.oh-my-zsh/themes/eko.zsh-theme](https://raw.github.com/eko/dotfiles/master/.oh-my-zsh/themes/eko.zsh-theme)
   * Install to `~/.oh-my-zsh/themes/eko.zsh-theme`
 

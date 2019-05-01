@@ -11,6 +11,7 @@ install: ## Installs dotfiles into current environment
 	@$(MAKE) DOTFILE=.functions install_file
 	@$(MAKE) DOTFILE=.gitconfig install_file
 	@$(MAKE) DOTFILE=.gitignore install_file
+	@$(MAKE) DOTFILE .iTerm2/com.googlecode.iterm2.plist install_file
 	@$(MAKE) DOTFILE=.oh-my-zsh/themes/eko.zsh-theme install_file
 	@$(MAKE) DOTFILE=.sources install_file
 	@$(MAKE) DOTFILE=.tmux.conf install_file
@@ -50,5 +51,6 @@ retrieve-files: ## Synchronize files from local host to git repository
 	cp ~/.tmux.conf .tmux.conf
 	cp ~/.vimrc .vimrc
 	cp ~/.zshrc .zshrc
+	cp ~/.iTerm2/com.googlecode.iterm2.plist .iTerm2/com.googlecode.iterm2.plist
 	gpg2 --encrypt --recipient vincent --output .encrypted/.ssh/config ~/.ssh/config
 	gpg2 --encrypt --recipient vincent --output .encrypted/.otpkeys ~/.otpkeys
