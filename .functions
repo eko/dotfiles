@@ -137,16 +137,21 @@ function dig_in_parallel() {
     fi
 }
 
+# Fetches top 100000 subdomains list and test it against given domain
+# Usage: digscan <domain>
 function digscan() {
     set +m;
 
-    subdomains=( a ad ads alert alpha adm admin administration amazon ami amis analytics api apis api-gateway app apps application archive archives asset assets auth authentication auto autodiscover aws b back backend bastion bastions berry berrypi beta b2b b2c bill bills black blog bo board brown build builds bus c cache cached cal calendar cdn ceph cli client clients cluster clusters cd ci cloud cms crm com communication connect connection conf config configuration confluence console consul contact contacts content contract contracts corp corporation cpanel cust custom customer customers d dark dashboard data datas database db dbs dev demo demos direct directory discover discovery display dl dns doc documentation domain domains download downloads e elastic elasticsearch elb elk email emails endpoint exchange exchanges ext extern external externals extra extranet f factory free files forum forums front frontend ftp g gw gateway geo git gitlab github go golang gov grafana graph graphs graphana grey green group grpc h ha haproxy health healths help hold holds holder home host hosting http httpproxy https httpsproxy hub hubs i info infos img image images int integ integration intra intranet j jenkins jira k kibana k8s kube kubectl kubernete kubernetes l ldap lib libs library libraries light live lb loadbalancer loader login logs m mail manager market marketing me member members media medias min minio mirror mirrors mobile mobiles monitor monitors monitoring mongo mongodb movie movies my mysql movie movies n nas net network nexus new news no ns1 ns2 ns3 ns4 ns5 o old op operation operations ops open openshift opensource openvpn order orders owa p package packages packagist partner partners perso preprod priv private prive prom prometheus portal postgres postgresql pro prod product production pros prox proxies proxy purple q quality qualys r r7 rabbit rabbitmq rasp raspberry recette red redis reg relay registry remote rest restful restfull rule rules root roots s s3 secret secrets secure sale sales serv server servers sls share shop smtp source sources sql ssh sso sta stage stages staging stat static statistics stats status storage store stream sup support svn t test tests time timeline u upload v vault video videos view views vol vols volume volumes vpn vps w web webdisk webmail white wiki work worker workers www ww1 x y yellow yes z zabix zabbix zoo )
+    echo "Fetching subdomain list...\n";
+    curl -s -o /tmp/subdomains https://raw.githubusercontent.com/internetwache/CT_subdomains/master/top-100000.txt
 
     echo "Checking...\n";
 
-    for subdomain in "${subdomains[@]}"; do
+    while IFS=, read -r count subdomain
+    do
         dig_in_parallel "$subdomain.$1" &
-    done
+        sleep 0.05
+    done < /tmp/subdomains
 
     wait
     set -m;
