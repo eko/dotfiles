@@ -391,11 +391,13 @@ function rabbitgraph {
     jplot --steps 1200 ready+unacked+total+consumers+publish_rate+ack_rate+redeliver_rate
 }
 
-# Kubernetes port-forward alias
+# Kubernetes port-forward alias that keeps reconnect when failing
 # Usage: kforward context namespace pod-name ports
 function kforward {
-    podName=`kubectl get pods -n $2 --context $1 | grep $3 | cut -d' ' -f1`
-    kubectl port-forward --context=$1 -n $2 $podName $4
+    while true; do
+        podName=`kubectl get pods -n $2 --context $1 | grep $3 | head -1 | cut -d' ' -f1`
+        kubectl port-forward --context=$1 -n $2 $podName $4
+    done
 }
 
 function kubernetes_image_diff {
