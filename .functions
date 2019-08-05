@@ -240,6 +240,15 @@ function genpasswd() {
     echo "Raw: $passwd\n\nSHA256: $sha256\nSHA512: $sha512\n\nMD5: $md5";
 }
 
+# See https://www.iterm2.com/3.3/documentation-scripting-fundamentals.html
+function iterm2_print_user_vars() {
+    iterm2_set_user_var phpVersion $(php -v | awk '/^PHP/ { print $2 }')
+    iterm2_set_user_var rubyVersion $(ruby -v | awk '{ print $2 }')
+    iterm2_set_user_var nodeVersion $(node -v | awk '{ gsub("v", ""); print $1 }')
+    iterm2_set_user_var goVersion $(go version | awk '{ gsub("go", ""); print $2 }')
+    iterm2_set_user_var mondayVersion $(/usr/local/bin/monday version | awk '{ gsub("v", ""); print $5 }')
+}
+
 # Gets iTunes current track information
 function itunes_title_script() {
     osascript -e 'tell application "iTunes" to get the '"$1"' of the current track'
