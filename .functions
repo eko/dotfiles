@@ -15,7 +15,7 @@ function b64decode() {
 
 # Usage: cht language/something
 function cht() {
-    curl cht.sh/$*
+    curl cht.sh/`echo $* | tr ' ' +`
 }
 
 # Recursively delete `.DS_Store` files
@@ -218,7 +218,7 @@ function sshproxy() {
     ssh -fN -D 5000 $1
     networksetup -setsocksfirewallproxy "$selected" localhost 5000
     networksetup -setsocksfirewallproxystate "$selected" on
-    export http_proxy=socks5://127.0.0.1:5000 https_proxy=socks5://127.0.0.1:5000
+    export http_proxy=socks5://127.0.0.1:5000 https_proxy=socks5://127.0.0.1:5000 all_proxy=socks5://127.0.0.1:5000
 
     echo "-> Done: proxy is ready"
 }
@@ -328,6 +328,12 @@ function transfer() {
     rm -f $tmpfile;
 }
 
+# Kills processes that run of a given port number
+# Usage: killp <port number>
+function killp {
+    lsof -i :$1 | tail -n+2 | awk '{ print $2 }' | xargs kill
+}
+
 # Graph ping between host and a given hostname
 # Usage: pinggraph <host>
 function pinggraph {
@@ -396,7 +402,7 @@ function rabbitgraph {
 function kforward {
     while true; do
         podName=`kubectl get pods -n $2 --context $1 | grep $3 | head -1 | cut -d' ' -f1`
-        kubectl port-forward --context=$1 -n $2 $podName $4
+        kubectl port-forward --context=$1 -n $2 $podName $4 $5 $6 $7 $8 $9
     done
 }
 

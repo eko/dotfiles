@@ -52,7 +52,7 @@
     laf = log --oneline --decorate --follow --all --
     lag = log --oneline --decorate --graph --all
     lc = log --oneline --decorate --graph --left-right
-    lch = !git log --oneline --decorate --graph --left-right HEAD...$1
+    lch = !git log --oneline --no-merges --color HEAD...$1
     lf = log --oneline --decorate --follow --
     lga = log --graph --pretty=tformat:'%Cred%h%Creset -%C(yellow)%d%Creset%s %Cgreen(%an %cd)%Creset' --abbrev-commit --date=iso
     lg = log --graph --pretty=tformat:'%Cred%h%Creset -%C(yellow)%d%Creset%s %Cgreen(%an %cr)%Creset' --abbrev-commit --date=relative
@@ -98,3 +98,5 @@
 [pager]
     diff = diff-so-fancy | less --tabs=1,5 -RFX
     show = diff-so-fancy | less --tabs=1,5 -RFX
+[rebase]
+	autosquash = true
