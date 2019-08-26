@@ -247,6 +247,7 @@ function iterm2_print_user_vars() {
     iterm2_set_user_var nodeVersion $(node -v | awk '{ gsub("v", ""); print $1 }')
     iterm2_set_user_var goVersion $(go version | awk '{ gsub("go", ""); print $2 }')
     iterm2_set_user_var mondayVersion $(/usr/local/bin/monday version | awk '{ gsub("v", ""); print $5 }')
+    iterm2_set_user_var kubeContext $(kubectl config get-contexts | grep "*" | awk '{ print $2 }')
 }
 
 # Gets iTunes current track information

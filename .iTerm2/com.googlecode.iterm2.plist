@@ -258,7 +258,7 @@
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>56 332 592 584 0 0 1680 1027 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 625 570 402 0 0 1680 1027 </string>
+	<string>0 499 871 528 0 0 1680 1027 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>0 544 935 483 0 0 1680 1050 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -996,7 +996,7 @@
 					</dict>
 					<dict>
 						<key>class</key>
-						<string>iTermStatusBarNetworkUtilizationComponent</string>
+						<string>iTermStatusBarSwiftyStringComponent</string>
 						<key>configuration</key>
 						<dict>
 							<key>knobs</key>
@@ -1005,6 +1005,8 @@
 								<integer>1</integer>
 								<key>base: priority</key>
 								<real>5</real>
+								<key>expression</key>
+								<string>PHP: \(user.phpVersion)</string>
 								<key>shared text color</key>
 								<dict>
 									<key>Alpha Component</key>
@@ -1053,62 +1055,13 @@
 								<key>base: priority</key>
 								<real>5</real>
 								<key>expression</key>
-								<string>PHP: \(user.phpVersion)</string>
-								<key>shared text color</key>
-								<dict>
-									<key>Alpha Component</key>
-									<real>1</real>
-									<key>Blue Component</key>
-									<real>0.69750000000000001</real>
-									<key>Color Space</key>
-									<string>sRGB</string>
-									<key>Green Component</key>
-									<real>0.90000000000000002</real>
-									<key>Red Component</key>
-									<real>0.63</real>
-								</dict>
-							</dict>
-							<key>layout advanced configuration dictionary value</key>
-							<dict>
-								<key>algorithm</key>
-								<integer>1</integer>
-								<key>background color</key>
-								<dict>
-									<key>Alpha Component</key>
-									<real>1</real>
-									<key>Blue Component</key>
-									<real>0.0</real>
-									<key>Color Space</key>
-									<string>sRGB</string>
-									<key>Green Component</key>
-									<real>0.0</real>
-									<key>Red Component</key>
-									<real>0.0</real>
-								</dict>
-								<key>font</key>
-								<string>.AppleSystemUIFont 12</string>
-							</dict>
-						</dict>
-					</dict>
-					<dict>
-						<key>class</key>
-						<string>iTermStatusBarSwiftyStringComponent</string>
-						<key>configuration</key>
-						<dict>
-							<key>knobs</key>
-							<dict>
-								<key>base: compression resistance</key>
-								<integer>1</integer>
-								<key>base: priority</key>
-								<real>5</real>
-								<key>expression</key>
 								<string>Node: \(user.nodeVersion)</string>
 								<key>shared text color</key>
 								<dict>
 									<key>Alpha Component</key>
 									<real>1</real>
 									<key>Blue Component</key>
-									<real>0.90000000000000002</real>
+									<real>0.69750000000000001</real>
 									<key>Color Space</key>
 									<string>sRGB</string>
 									<key>Green Component</key>
@@ -1161,7 +1114,7 @@
 									<key>Color Space</key>
 									<string>sRGB</string>
 									<key>Green Component</key>
-									<real>0.69750000000000001</real>
+									<real>0.90000000000000002</real>
 									<key>Red Component</key>
 									<real>0.63</real>
 								</dict>
@@ -1210,6 +1163,55 @@
 									<key>Color Space</key>
 									<string>sRGB</string>
 									<key>Green Component</key>
+									<real>0.69750000000000001</real>
+									<key>Red Component</key>
+									<real>0.63</real>
+								</dict>
+							</dict>
+							<key>layout advanced configuration dictionary value</key>
+							<dict>
+								<key>algorithm</key>
+								<integer>1</integer>
+								<key>background color</key>
+								<dict>
+									<key>Alpha Component</key>
+									<real>1</real>
+									<key>Blue Component</key>
+									<real>0.0</real>
+									<key>Color Space</key>
+									<string>sRGB</string>
+									<key>Green Component</key>
+									<real>0.0</real>
+									<key>Red Component</key>
+									<real>0.0</real>
+								</dict>
+								<key>font</key>
+								<string>.AppleSystemUIFont 12</string>
+							</dict>
+						</dict>
+					</dict>
+					<dict>
+						<key>class</key>
+						<string>iTermStatusBarSwiftyStringComponent</string>
+						<key>configuration</key>
+						<dict>
+							<key>knobs</key>
+							<dict>
+								<key>base: compression resistance</key>
+								<integer>1</integer>
+								<key>base: priority</key>
+								<real>5</real>
+								<key>expression</key>
+								<string>Monday: \(user.mondayVersion)</string>
+								<key>shared text color</key>
+								<dict>
+									<key>Alpha Component</key>
+									<real>1</real>
+									<key>Blue Component</key>
+									<real>0.90000000000000002</real>
+									<key>Color Space</key>
+									<string>sRGB</string>
+									<key>Green Component</key>
 									<real>0.63</real>
 									<key>Red Component</key>
 									<real>0.76500000000000001</real>
@@ -1249,7 +1251,7 @@
 								<key>base: priority</key>
 								<real>5</real>
 								<key>expression</key>
-								<string>Monday: \(user.mondayVersion)</string>
+								<string>Kube: \(user.kubeContext)</string>
 								<key>shared text color</key>
 								<dict>
 									<key>Alpha Component</key>
@@ -1322,7 +1324,7 @@
 	<key>NoSyncInstallationId</key>
 	<string>242FDCB9-0B02-481C-BD64-7483D56503FA</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>4</integer>
+	<integer>6</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -1400,6 +1402,14 @@
 				<key>isTerminal</key>
 				<true/>
 				<key>name</key>
+				<string>user.kubeContext</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
 				<string>jobName</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
@@ -1465,6 +1475,14 @@
 				<true/>
 				<key>name</key>
 				<string>tmuxWindowPane</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
+				<string>user.mondayVersion</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
 			</dict>
@@ -1827,6 +1845,14 @@
 				<key>isTerminal</key>
 				<true/>
 				<key>name</key>
+				<string>currentTab.currentSession.user.mondayVersion</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
 				<string>currentTab.currentSession.hostname</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
@@ -1867,6 +1893,14 @@
 				<key>isTerminal</key>
 				<true/>
 				<key>name</key>
+				<string>currentTab.currentSession.user.kubeContext</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
 				<string>currentTab.currentSession.jobName</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
@@ -1887,6 +1921,14 @@
 				<true/>
 				<key>name</key>
 				<string>currentSession.terminalIconName</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
+				<string>currentSession.user.kubeContext</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
 			</dict>
@@ -1975,6 +2017,14 @@
 				<true/>
 				<key>name</key>
 				<string>window</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
+				<string>currentSession.user.mondayVersion</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
 			</dict>
