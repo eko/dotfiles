@@ -166,6 +166,15 @@ function gify {
     ffmpeg -i $1 -vf scale=$ratio -r $fpm -ss $3 -t $4 $2
 }
 
+# Usage: jwt <token>
+function jwt {
+    algo=`echo $1 | cut -d "." -f1 | base64 --decode`
+    payload=`echo $1 | cut -d "." -f2 | base64 --decode`
+
+    echo -e $algo
+    echo -e $payload
+}
+
 # Usage: lighthouse <url> <json | html>
 function lighthouse {
     result=`curl -s https://builder-dot-lighthouse-ci.appspot.com/stream\?url=$1\&format=$2 | grep done | cut -d' ' -f3`
