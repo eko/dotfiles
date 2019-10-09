@@ -114,7 +114,6 @@ brew cask install tableplus
 # misc
 brew cask install gpgtools
 
-brew install autoenv
 brew install awscli
 brew install curl
 brew install fd

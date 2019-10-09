@@ -432,6 +432,13 @@ function kimage {
     kubectl --context $1 -n $2 describe pod/$podName | grep Image: | head -1 | cut -d':' -f2- | tr -d ' '
 }
 
+# Kubernetes display of pod logs
+# Usage: klogs context namespace pod-name additional-options
+function klogs {
+    podName=`kubectl --context $1 -n $2 get pods | grep $3 | cut -d' ' -f1 | head -1`
+    kubectl --context $1 -n $2 logs pod/$podName ${@:4}
+}
+
 function kubernetes_image_diff {
     k describe pods -n $1 --context $2 | grep Image: | cut -d':' -f2 -f3 | cut -d'/' -f2- | tr -d ' ' > /tmp/$2.diff
 }
