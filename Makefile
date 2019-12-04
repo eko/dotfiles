@@ -5,13 +5,12 @@ help:
 
 install: ## Installs dotfiles into current environment
 	@$(MAKE) DOTFILE=.aliases install_file
-	@$(MAKE) DOTFILE=.atom/config.cson install_file
 	@$(MAKE) DOTFILE=.brew install_file
 	@$(MAKE) DOTFILE=.exports install_file
 	@$(MAKE) DOTFILE=.functions install_file
 	@$(MAKE) DOTFILE=.gitconfig install_file
 	@$(MAKE) DOTFILE=.gitignore install_file
-	@$(MAKE) DOTFILE .iTerm2/com.googlecode.iterm2.plist install_file
+	@$(MAKE) DOTFILE=.iTerm2/com.googlecode.iterm2.plist install_file
 	@$(MAKE) DOTFILE=.oh-my-zsh/themes/eko.zsh-theme install_file
 	@$(MAKE) DOTFILE=.sources install_file
 	@$(MAKE) DOTFILE=.tmux.conf install_file
