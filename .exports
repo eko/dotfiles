@@ -1,3 +1,6 @@
+# GPG
+export GPG_TTY=$(tty)
+
 # Golang
 export GOPATH="$HOME/golang"
 export GOBIN="$GOPATH/bin"
