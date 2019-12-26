@@ -416,6 +416,13 @@ function rabbitgraph {
     jplot --steps 1200 ready+unacked+total+consumers+publish_rate+ack_rate+redeliver_rate
 }
 
+# Kubernetes exec on a specific pod
+# Usage: kexec context namespace pod-name
+function kexec {
+    podName=`kubectl --context $1 -n $2 get pods | grep $3 | cut -d' ' -f1 | head -1`
+    kubectl --context $1 -n $2 exec -it $podName ${@:4}
+}
+
 # Kubernetes port-forward alias that keeps reconnect when failing
 # Usage: kforward context namespace pod-name ports
 function kforward {
