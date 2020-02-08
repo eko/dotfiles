@@ -420,6 +420,7 @@ function rabbitgraph {
 # Usage: kexec context namespace pod-name
 function kexec {
     podName=`kubectl --context $1 -n $2 get pods | grep $3 | cut -d' ' -f1 | head -1`
+    echo "kubectl --context $1 -n $2 exec -it $podName ${@:4}"
     kubectl --context $1 -n $2 exec -it $podName ${@:4}
 }
 
@@ -428,6 +429,7 @@ function kexec {
 function kforward {
     while true; do
         podName=`kubectl get pods -n $2 --context $1 | grep $3 | head -1 | cut -d' ' -f1`
+        echo "kubectl port-forward --context=$1 -n $2 $podName $4 $5 $6 $7 $8 $9"
         kubectl port-forward --context=$1 -n $2 $podName $4 $5 $6 $7 $8 $9
     done
 }
@@ -436,6 +438,7 @@ function kforward {
 # Usage: kimage context namespace pod-name
 function kimage {
     podName=`kubectl --context $1 -n $2 get pods | grep $3 | cut -d' ' -f1 | head -1`
+    echo "kubectl --context $1 -n $2 describe pod/$podName | grep Image: | head -1 | cut -d':' -f2- | tr -d ' '"
     kubectl --context $1 -n $2 describe pod/$podName | grep Image: | head -1 | cut -d':' -f2- | tr -d ' '
 }
 
@@ -443,11 +446,12 @@ function kimage {
 # Usage: klogs context namespace pod-name additional-options
 function klogs {
     podName=`kubectl --context $1 -n $2 get pods | grep $3 | cut -d' ' -f1 | head -1`
+    echo "kubectl --context $1 -n $2 logs pod/$podName ${@:4}"
     kubectl --context $1 -n $2 logs pod/$podName ${@:4}
 }
 
 function kubernetes_image_diff {
-    k describe pods -n $1 --context $2 | grep Image: | cut -d':' -f2 -f3 | cut -d'/' -f2- | tr -d ' ' > /tmp/$2.diff
+    kubectl describe pods -n $1 --context $2 | grep Image: | cut -d':' -f2 -f3 | cut -d'/' -f2- | tr -d ' ' > /tmp/$2.diff
 }
 
 # Kubernetes image diff between 2 contexts
@@ -458,6 +462,10 @@ function kdiff {
 
     grc diff -d /tmp/$2.diff /tmp/$3.diff
     rm /tmp/$2.diff /tmp/$3.diff
+}
+
+function pid() {
+    ps aux | grep "$@" | grep -v "grep --color" | cut -d' ' -f2
 }
 
 # Usage: swap <file1> <file2>
