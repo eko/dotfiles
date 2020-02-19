@@ -157,6 +157,15 @@ function digscan() {
     set -m;
 }
 
+# This function is used by other functions to print and then run the specified command
+# Usage: echo_and_run your command and arguments
+function echo_and_run() {
+    command=$@
+
+    echo "$ $command"
+    bash -c "$command"
+}
+
 # Transforms a video file to a gif
 # Usage: gify <input file> <output file> <start> <duration> [<ratio> <fps>]
 function gify {
@@ -420,8 +429,7 @@ function rabbitgraph {
 # Usage: kexec context namespace pod-name
 function kexec {
     podName=`kubectl --context $1 -n $2 get pods | grep $3 | cut -d' ' -f1 | head -1`
-    echo "kubectl --context $1 -n $2 exec -it $podName ${@:4}"
-    kubectl --context $1 -n $2 exec -it $podName ${@:4}
+    echo_and_run kubectl --context $1 -n $2 exec -it $podName ${@:4}
 }
 
 # Kubernetes port-forward alias that keeps reconnect when failing
@@ -429,25 +437,31 @@ function kexec {
 function kforward {
     while true; do
         podName=`kubectl get pods -n $2 --context $1 | grep $3 | head -1 | cut -d' ' -f1`
-        echo "kubectl port-forward --context=$1 -n $2 $podName $4 $5 $6 $7 $8 $9"
-        kubectl port-forward --context=$1 -n $2 $podName $4 $5 $6 $7 $8 $9
+        echo_and_run kubectl port-forward --context=$1 -n $2 $podName $4 $5 $6 $7 $8 $9
     done
+}
+
+# ksocatforward context namespace 8025 25 hostname
+function ksocatforward {
+    echo_and_run kubectl run --context=$1 -n $2 --restart=Never --image=alpine/socat alpine-socat -- -d -d tcp-listen:$4,fork,reuseaddr tcp-connect:$5:$4
+    echo_and_run kubectl wait --context $1 -n $2 --for=condition=Ready pod/alpine-socat
+
+    echo "Don't forget to run when finished: kubectl --context $1 -n $2 delete pod/alpine-socat"
+    echo_and_run kubectl port-forward --context $1 -n $2 pod/alpine-socat $3:$4
 }
 
 # Kubernetes display current image deplyed for a pod
 # Usage: kimage context namespace pod-name
 function kimage {
     podName=`kubectl --context $1 -n $2 get pods | grep $3 | cut -d' ' -f1 | head -1`
-    echo "kubectl --context $1 -n $2 describe pod/$podName | grep Image: | head -1 | cut -d':' -f2- | tr -d ' '"
-    kubectl --context $1 -n $2 describe pod/$podName | grep Image: | head -1 | cut -d':' -f2- | tr -d ' '
+    echo_and_run kubectl --context $1 -n $2 describe pod/$podName | grep Image: | head -1 | cut -d':' -f2- | tr -d ' '
 }
 
 # Kubernetes display of pod logs
 # Usage: klogs context namespace pod-name additional-options
 function klogs {
     podName=`kubectl --context $1 -n $2 get pods | grep $3 | cut -d' ' -f1 | head -1`
-    echo "kubectl --context $1 -n $2 logs pod/$podName ${@:4}"
-    kubectl --context $1 -n $2 logs pod/$podName ${@:4}
+    echo_and_run kubectl --context $1 -n $2 logs pod/$podName ${@:4}
 }
 
 function kubernetes_image_diff {
