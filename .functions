@@ -77,6 +77,12 @@ function encryptfile() {
     gpg2 --encrypt --recipient vincent --output $output $1
 }
 
+# Run 'diskutil list' and choose disk to erase
+# Usage: erasedisk <disk2>
+function erasedisk() {
+    diskutil eraseDisk jhfs+ EDD gpt $1 ; diskutil list
+}
+
 # Usage: decryptfile <filepath> <output>
 function decryptfile() {
     command="gpg2 --decrypt $1"
