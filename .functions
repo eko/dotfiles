@@ -247,6 +247,27 @@ function sshproxy() {
     echo "-> Done: proxy is ready"
 }
 
+# Connects to a TOR server of a specified country
+# Usage: torproxy {ca},{us}
+func torproxy() {
+    selectnetworkinterface
+
+    # prepare proxy configuration
+    networksetup -setsocksfirewallproxy "$selected" 127.0.0.1 9050
+    networksetup -setsocksfirewallproxystate "$selected" on
+
+    echo "-> Running Tor proxy on 127.0.0.1:9050"
+
+    # run tor with specified configuration
+    echo "ExitNodes $1\nStrictNodes 1" > /tmp/torrc
+    tor -f /tmp/torrc
+
+    # when tor is stopped, remove proxy
+    networksetup -setsocksfirewallproxystate "$selected" off
+
+    echo "-> Done: Tor proxy is stopped, config reset"
+}
+
 # Automatically Starting tmux on SSH
 function ssht() {
   SSH_HOST="${@: -1}"
