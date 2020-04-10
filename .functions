@@ -221,6 +221,51 @@ function opendns() {
     networksetup -setdnsservers "$selected" 1.1.1.1 1.0.0.1 2606:4700:4700::1111 2606:4700:4700::1001
 }
 
+# Sets an HTTP proxy on a network interface
+# Usage: httpproxy 127.0.0.1 9050
+function httpproxy() {
+    selectnetworkinterface
+
+    # prepare proxy configuration
+    networksetup -setwebproxy "$selected" $*
+    networksetup -setwebproxystate "$selected" on
+
+    echo "-> Running proxy on $*"
+
+    trap 'echo caught signal: SIGINT' SIGINT
+    sleep 86400
+
+    # when tor is stopped, remove proxy
+    networksetup -setwebproxystate "$selected" off
+
+    trap - SIGINT
+
+    echo "-> Done: proxy is stopped, config reset"
+}
+
+
+# Sets an HTTPS proxy on a network interface
+# Usage: httpsproxy 127.0.0.1 9050
+function httpsproxy() {
+    selectnetworkinterface
+
+    # prepare proxy configuration
+    networksetup -setsecurewebproxy "$selected" $*
+    networksetup -setsecurewebproxystate "$selected" on
+
+    echo "-> Running proxy on $*"
+
+    trap 'echo caught signal: SIGINT' SIGINT
+    sleep 86400
+
+    # when tor is stopped, remove proxy
+    networksetup -setsecurewebproxystate "$selected" off
+
+    trap - SIGINT
+
+    echo "-> Done: proxy is stopped, config reset"
+}
+
 # Sets SSH proxy on a network interface
 # Usage: sshproxy <user>@<ip>
 # Usage: sshproxy stop
