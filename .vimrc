@@ -71,6 +71,9 @@ Plug 'tomasr/molokai'
 "" Custom bundles
 "*****************************************************************************
 
+" prettify all languages
+Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+
 " c
 Plug 'vim-scripts/c.vim', {'for': ['c', 'cpp']}
 Plug 'ludwig/split-manpage.vim'
@@ -378,6 +381,9 @@ nnoremap <leader>. :lcd %:p:h<CR>
 
 "" Opens an edit command with the path of the currently edited file filled in
 noremap <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
+
+""" Searchs for a pattern using ripgrep
+noremap <Leader>s :Rg <C-R> <CR>
 
 "" Opens a tab edit command with the path of the currently edited file filled
 noremap <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
