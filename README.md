@@ -77,5 +77,8 @@ Here is the detail of available dotfiles:
   * Install to `~/.vimrc`
   * Type `vim +PlugInstall +qall` to install vim plugins
 
+## [.vim](https://raw.github.com/eko/dotfiles/master/.vim)
+  * Install to `~/.vim`
+
 ## [.zshrc](https://raw.github.com/eko/dotfiles/master/.zshrc)
   * Install to `~/.zshrc`

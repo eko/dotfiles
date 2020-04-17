@@ -64,9 +64,6 @@ Plug 'xolox/vim-session'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
-"" Color
-Plug 'tomasr/molokai'
-
 "*****************************************************************************
 "" Custom bundles
 "*****************************************************************************
@@ -192,7 +189,7 @@ set ruler
 set number
 
 let no_buffers_menu=1
-silent! colorscheme molokai
+silent! colorscheme jellybeans
 
 set mousemodel=popup
 set t_Co=256
@@ -438,6 +435,7 @@ if has('autocmd')
 endif
 
 "" Copy/Paste/Cut
+set clipboard=unnamed
 if has('unnamedplus')
   set clipboard=unnamed,unnamedplus
 endif

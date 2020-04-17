@@ -15,6 +15,7 @@ install: ## Installs dotfiles into current environment
 	@$(MAKE) DOTFILE=.sources install_file
 	@$(MAKE) DOTFILE=.tmux.conf install_file
 	@$(MAKE) DOTFILE=.vimrc install_file
+	@$(MAKE) DOTFILE=.vim/colors/jellybeans.vim install_file
 	@$(MAKE) DOTFILE=.zshrc install_file
 
 install-encrypted: ## Installs encrypted dotfiles into current environment
