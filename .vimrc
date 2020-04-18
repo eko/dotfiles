@@ -350,8 +350,8 @@ set autoread
 "*****************************************************************************
 
 "" Split
-noremap <Leader>h :<C-u>split<CR>
-noremap <Leader>v :<C-u>vsplit<CR>
+noremap <Leader>h :<C-u>split<CR><C-w>w
+noremap <Leader>v :<C-u>vsplit<CR><C-w>w
 
 "" Git
 noremap <Leader>ga :Gwrite<CR>
