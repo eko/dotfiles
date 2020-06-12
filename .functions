@@ -508,6 +508,13 @@ function kexec {
     echo_and_run kubectl --context $1 -n $2 exec -it $podName ${@:4}
 }
 
+# Forward TCP trafic to a given hostname/port by using an existing Kubernetes pod
+# Usage: ktcpserver <context> <namespace> <podname> <hostname> <port>
+function ktcpserver {
+    podName=`kubectl --context $1 -n $2 get pods | grep $3 | cut -d' ' -f1 | head -1`
+    tcpserver 127.0.0.1 $5 kubectl --context $1 -n $2 exec -i $podName nc $4:$5
+}
+
 # Kubernetes port-forward alias that keeps reconnect when failing
 # Usage: kforward context namespace pod-name ports
 function kforward {
