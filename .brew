@@ -21,6 +21,7 @@ brew install bash
 brew install bat
 brew install ffmpeg
 brew install fzf
+brew install git
 brew install grc
 brew install rs/tap/jaggr
 brew install rs/tap/jplot
@@ -33,11 +34,10 @@ brew install ucspi-tcp
 brew install vim
 brew install zsh
 
+# tmux
 brew tap greymd/tools
 brew install tmux-xpanes
-
-# browser
-brew cask install google-chrome
+git clone https://github.com/tmux-plugins/tmux-resurrect ~/.tmux-resurrect
 
 # openssl
 brew install openssl
@@ -72,7 +72,7 @@ brew install ruby-install
 brew install chruby
 
 RUBIES=(
-  2.4.2
+  2.7.1
 )
 
 for ruby in "${RUBIES[@]}"; do
@@ -101,12 +101,13 @@ brew install nodejs
 brew install go
 
 # devops
-brew cask install virtualbox
-brew cask install vagrant
 brew cask install docker
 
 # image/video
 brew cask install vlc
+
+# google chrome
+brew cask install google-chrome
 
 # tools
 brew cask install slack
@@ -119,7 +120,6 @@ brew install awscli
 brew install curl
 brew install fd
 brew install findutils --with-default-names
-brew install git
 brew install graphviz
 brew install htop-osx
 brew install jq
