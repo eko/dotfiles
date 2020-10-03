@@ -517,7 +517,7 @@ function rabbitgraph {
 # Usage: kexec context namespace pod-name
 function kexec {
     podName=`kubectl --context $1 -n $2 get pods | grep $3 | cut -d' ' -f1 | head -1`
-    echo_and_run kubectl --context $1 -n $2 exec -it $podName ${@:4}
+    echo_and_run kubectl --context $1 -n $2 exec -it $podName -- ${@:4}
 }
 
 # Forward TCP trafic to a given hostname/port by using an existing Kubernetes pod
@@ -585,4 +585,34 @@ function swap() {
 # Usage: ddiff <source> <dest>
 function ddiff() {
     diff $1 $2 | vim -R -
+}
+
+# Usage with piped value: echo <value> | kb
+# Usage with arguments: kb <value>
+function kb() {
+    if (( $# == 0 )) ; then
+        echo "scale=2; $(</dev/stdin) / 1024" | bc
+    else
+        echo "scale=2; $1 / 1024" | bc
+    fi
+}
+
+# Usage with piped value: echo <value> | mb
+# Usage with arguments: mb <value>
+function mb() {
+    if (( $# == 0 )) ; then
+        echo "scale=2; $(</dev/stdin) / 1024 / 1024" | bc
+    else
+        echo "scale=2; $1 / 1024 / 1024" | bc
+    fi
+}
+
+# Usage with piped value: echo <value> | gb
+# Usage with arguments: gb <value>
+function gb() {
+    if (( $# == 0 )) ; then
+        echo "scale=2; $(</dev/stdin) / 1024 / 1024 / 1024" | bc
+    else
+        echo "scale=2; $1 / 1024 / 1024 / 1024" | bc
+    fi
 }
