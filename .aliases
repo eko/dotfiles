@@ -33,7 +33,7 @@ alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.ar
 alias bitcoin='curl -s https://api.cryptowat.ch/markets/summaries | jq ".result.\"kraken:btceur\".price.last"'
 
 # cURL
-alias curltime="curl -w \"\nConnect: %{time_connect} TTFB: %{time_starttransfer} Total time: %{time_total} \n\""
+alias curltime="curl -w \"\nConnect: %{time_connect} AppConnect: %{time_appconnect} Pre-Transfer: %{time_pretransfer} Redirect: %{time_redirect} StartTransfer (TTFB): %{time_starttransfer} Total time: %{time_total} \n\""
 
 # Docker
 alias doc="docker-compose"
