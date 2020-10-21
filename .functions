@@ -33,13 +33,13 @@ function csvpreview() {
 # Keep header line while doing a grep
 # Usage: ps aux | hgrep ssh
 function hgrep() {
-    { echo -n "\033[32m"; head -1; echo -n "\033[39m"; grep "$*" }
+    { echo -n "\033[32m"; head -1; echo -n "\033[39m"; grep $* }
 }
 
 # Keep header line while doing a grep (when having 2 header lines)
 # Usage: ps aux | hhgrep ssh
 function hhgrep() {
-    { echo -n "\033[32m"; head -2; echo -n "\033[39m"; grep "$*" }
+    { echo -n "\033[32m"; head -2; echo -n "\033[39m"; grep $* }
 }
 
 # Usage: encrypt <string>
