@@ -5,13 +5,16 @@ export GPG_TTY=$(tty)
 export GOPATH="$HOME/golang"
 export GOBIN="$GOPATH/bin"
 
+# PHP / Symfony
+export SYMFONYBIN="$HOME/.symfony/bin"
+
 # Visual Studio Code
 export CODEPATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
 # PATH
-export PATH="$PATH:$GOBIN:$CODEPATH"
+export PATH="$PATH:$GOBIN:$SYMFONYBIN:$CODEPATH"
 export PATH="/usr/local/opt/curl/bin:$PATH"
-export PATH="/usr/local/Cellar/qt/5.13.0/bin:$PATH"
+export PATH="/usr/local/opt/qt/bin:$PATH"
 
 # add support for ctrl+o to open selected file in VS Code
 export FZF_DEFAULT_OPTS="--bind='ctrl-o:execute(code {})+abort'"
