@@ -33,13 +33,13 @@ function csvpreview() {
 # Keep header line while doing a grep
 # Usage: ps aux | hgrep ssh
 function hgrep() {
-    { echo -n "\033[32m"; head -1; echo -n "\033[39m"; grep $* }
+    echo -n "\033[32m"; head -1; echo -n "\033[39m"; grep $*
 }
 
 # Keep header line while doing a grep (when having 2 header lines)
 # Usage: ps aux | hhgrep ssh
 function hhgrep() {
-    { echo -n "\033[32m"; head -2; echo -n "\033[39m"; grep $* }
+    echo -n "\033[32m"; head -2; echo -n "\033[39m"; grep $*
 }
 
 # Usage: encrypt <string>
@@ -306,7 +306,7 @@ function sshproxy() {
 
 # Connects to a TOR server of a specified country and opens a new Google Chrome session
 # Usage: torchromeproxy {ca},{us}
-func torchromeproxy() {
+function torchromeproxy() {
     echo "-> Running Tor proxy on 127.0.0.1:9050"
 
     echo "-> Opening Google Chrome..."
@@ -369,9 +369,9 @@ function track() {
 }
 
 # Find files and exec commands at them.
-# $ find-exec .coffee cat | wc -l
+# $ findexec .coffee cat | wc -l
 # # => 9762
-function find-exec() {
+function findexec() {
   find . -type f -iname "*${1:-}*" -exec "${2:-file}" '{}' \;
 }
 
@@ -392,7 +392,7 @@ function loc() {
     if [[ firstletter != "." ]]; then
       ext=".$ext"
     fi
-    lines=`find-exec "*$ext" cat | wc -l`
+    lines=`findexec "*$ext" cat | wc -l`
     lines=${lines// /}
     total=$(($total + $lines))
     echo "Lines of code for ${fg[white]}$ext${reset_color}: ${fg[yellow]}$lines${reset_color}"
@@ -524,7 +524,7 @@ function kexec {
 # Usage: ktcpserver <context> <namespace> <podname> <hostname> <port>
 function ktcpserver {
     podName=`kubectl --context $1 -n $2 get pods | grep $3 | cut -d' ' -f1 | head -1`
-    tcpserver 127.0.0.1 $5 kubectl --context $1 -n $2 exec -i $podName nc $4:$5
+    echo_and_run tcpserver 127.0.0.1 $5 kubectl --context $1 -n $2 exec -i $podName -- nc -v $4:$5
 }
 
 # Kubernetes port-forward alias that keeps reconnect when failing
