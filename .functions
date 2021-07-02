@@ -586,11 +586,22 @@ function ksocatforward {
     echo_and_run kubectl port-forward --context $1 -n $2 pod/alpine-socat $3:$4
 }
 
-# Kubernetes display current image deplyed for a pod
+# Kubernetes display current image deployed for a pod
 # Usage: kimage context namespace pod-name
 function kimage {
     podName=`kubectl --context $1 -n $2 get pods | grep $3 | cut -d' ' -f1 | head -1`
     echo_and_run kubectl --context $1 -n $2 describe pod/$podName | grep Image: | cut -d':' -f2- | tr -d ' '
+}
+
+# Kubernetes display current images deployed for a pod
+# Usage: kimages context namespace pod-name
+function kimages {
+    podNames=`kubectl --context $1 -n $2 get pods | grep $3 | cut -d' ' -f1`
+
+    while IFS= read -r line; do
+        echo -n "-> $line: "
+        kimage $1 $2 $3
+    done <<< $podNames
 }
 
 # Kubernetes display of pod logs
@@ -656,4 +667,28 @@ function gb() {
     else
         echo "scale=2; $1 / 1024 / 1024 / 1024" | bc
     fi
+}
+
+# Usage: gopprof <url> <number of checks> <interval second>
+# Example: gopprof http://localhost:8001/debug/pprof 5 10 (5 checks and wait 10 seconds each)
+function gopprof() {
+    PPROF_PATH=${PPROF_PATH:-$HOME/Desktop/pprof}
+    number=${2:-5}
+    interval=${3:-5}
+
+    rm -rf $PPROF_PATH/png
+    mkdir -p $PPROF_PATH/png
+
+    for i in {1..$number}; do
+        echo "\n-> iteration $i/$number..."
+        for value in allocs heap goroutine; do
+            echo "dumping: $value..."
+            curl -qs $1/$value > $PPROF_PATH/$value.$i.pprof
+
+            go tool pprof -png -output $PPROF_PATH/png/$value.$i.png $PPROF_PATH/$value.$i.pprof
+        done
+        sleep $interval
+    done
+
+    echo "\npprof report generation done, available at: $PPROF_PATH"
 }
