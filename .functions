@@ -367,6 +367,16 @@ function ssht() {
   ssh "$@" -t 'tmux ls && exec tmux a || exec tmux new || exec $SHELL -l'
 }
 
+# Usage: echo "Something that you want" | slugify
+function slugify() {
+  # Transliterate everything to ASCII
+  iconv -t ascii//TRANSLIT \
+  | tr -d "'" \
+  | sed -E 's/[^a-zA-Z0-9]+/-/g' \
+  | sed -E 's/^-+|-+$//g' \
+  | tr "[:upper:]" "[:lower:]"
+}
+
 # Generates a password and returns hashed values
 function genpasswd() {
     passwd=`env LC_CTYPE=C tr -dc 'a-zA-Z0-9-_\$\?' < /dev/urandom | head -c 20`;
