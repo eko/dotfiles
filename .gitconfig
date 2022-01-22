@@ -1,6 +1,9 @@
 [core]
     editor = vim
     filemode = true
+    autocrlf = false
+    ignorecase = false
+    pager = diff-so-fancy | less --tabs=4 -RFX
 [user]
     name = Vincent Composieux
     email = vincent@composieux.fr
@@ -8,7 +11,7 @@
 [commit]
     gpgsign = true
 [gpg]
-    program = gpg1
+    program = gpg
 [color]
     branch = auto
     diff = auto
