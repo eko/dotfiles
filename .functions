@@ -350,7 +350,7 @@ function sshproxy() {
 function torproxy() {
     echo "-> Running Tor proxy on 127.0.0.1:9050"
 
-    echo "ExitNodes $1\nStrictNodes 1" > /tmp/torrc
+    echo "ExitNodes $1\nStrictNodes 1\nAutomapHostsOnResolve 1" > /tmp/torrc
     tor -f /tmp/torrc
 
     echo "-> Done: Tor proxy is stopped, config reset"
@@ -365,7 +365,8 @@ function torchromeproxy() {
     /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --user-data-dir=/tmp/chrome --proxy-server=socks5://127.0.0.1:9050 --incognito &
 
     # run tor with specified configuration
-    echo "ExitNodes $1\nStrictNodes 1" > /tmp/torrc
+    echo "ExitNodes $1\nStrictNodes 1\nAutomapHostsOnResolve 1" > /tmp/torrc
+    tor -f /tmp/torrc
     tor -f /tmp/torrc
 
     echo "-> Done: Tor proxy is stopped, config reset"
