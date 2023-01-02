@@ -28,3 +28,5 @@ export FZF_DEFAULT_OPTS="--bind='ctrl-o:execute(code {})+abort'"
 
 # ignore history commands starting with space
 export HISTIGNORE=' *'
+
+export TERM=xterm
