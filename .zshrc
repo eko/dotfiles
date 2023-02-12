@@ -48,7 +48,7 @@ ZSH_THEME="eko"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-iterm-touchbar)
+plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -95,3 +95,19 @@ done;
 unset file;
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# tabtab source for packages
+# uninstall by removing these lines
+[[ -f ~/.config/tabtab/__tabtab.zsh ]] && . ~/.config/tabtab/__tabtab.zsh || true
+
+# enable zsh completion
+#if type brew &>/dev/null; then
+#    FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+#
+#    autoload -Uz compinit
+#    compinit
+#fi
+
+# Load asdf and its completion
+. "/usr/local/opt/asdf/libexec/asdf.sh"
+. "/usr/local/opt/asdf/etc/bash_completion.d/asdf.bash"

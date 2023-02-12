@@ -4,6 +4,16 @@ GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 NC='\033[0m'
 
+# Install latest version and remove previous one
+# asdflatestreplace <plugin>
+function asdflatestreplace() {
+    asdf install $1 latest
+    asdf global $1 latest
+
+    local_version=`asdf list $1`
+    asdf uninstall $local_version
+}
+
 # Base64 encode a string
 function b64() {
     echo -n "$*" | base64
