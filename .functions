@@ -10,8 +10,8 @@ function asdflatestreplace() {
     asdf install $1 latest
     asdf global $1 latest
 
-    local_version=`asdf list $1`
-    asdf uninstall $local_version
+    local_version=`asdf list $1 | tail -1 | xargs`
+    asdf uninstall $1 $local_version
 }
 
 # Base64 encode a string
@@ -246,11 +246,7 @@ function gify {
 
 # Usage: jwt <token>
 function jwt {
-    algo=`echo $1 | cut -d "." -f1 | base64 --decode`
-    payload=`echo $1 | cut -d "." -f2 | base64 --decode`
-
-    echo -e $algo
-    echo -e $payload
+    jq -R 'split(".") | .[0],.[1] | @base64d | fromjson' <<< $(echo $1)
 }
 
 # Usage: lighthouse <url> <json | html>
