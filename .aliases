@@ -68,9 +68,6 @@ alias icloud='cd ~/Library/Mobile\ Documents/com~apple~CloudDocs/'
 # Monday dev tool alias
 alias monday='sudo -E monday'
 
-# Run old PHP versions using docker
-alias php54='docker run --rm -it -v $(pwd):$(pwd) -w $(pwd) jolicode/php54 php'
-
 # PHPStan CLI tool using docker
 alias phpstan='docker run -v $PWD:/app --rm phpstan/phpstan'
 
@@ -91,3 +88,5 @@ alias genlocalhostcert='openssl req -x509 -out localhost.crt -keyout localhost.k
   -newkey rsa:2048 -nodes -sha256 \
   -subj ''/CN=localhost'' -extensions EXT -config <( \
    printf "[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")'
+
+alias vlc='/Applications/VLC.app/Contents/MacOS/VLC'

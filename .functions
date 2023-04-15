@@ -405,6 +405,16 @@ function genpasswd() {
     echo "Raw: $passwd\n\nSHA256: $sha256\nSHA512: $sha512\n\nMD5: $md5";
 }
 
+# Usage: gitretag
+function gitretag() {
+    if [ "$1" = "" ]; then
+       echo "missing tag"
+       exit 1
+    fi
+
+    git tag -d $1 && git push origin :$1 && git tag $1 && git push origin $1
+}
+
 # See https://www.iterm2.com/3.3/documentation-scripting-fundamentals.html
 function iterm2_print_user_vars() {
     iterm2_set_user_var phpVersion $(php -v | awk '/^PHP/ { print $2 }')
