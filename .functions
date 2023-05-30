@@ -40,6 +40,12 @@ function csvpreview() {
     sed 's/,,/, ,/g;s/,,/, ,/g' "$@" | column -s, -t | less -#2 -N -S
 }
 
+# Recursively check if a file contains a word at least twice
+# Usage: findduplicateword <something>
+function findduplicateword() {
+    grep -ro -c "$1" * | awk -F: '{ if ($2 > 1) { print $1 } }'
+}
+
 # Keep header line while doing a grep
 # Usage: ps aux | hgrep ssh
 function hgrep() {
@@ -233,6 +239,14 @@ function echo_and_run() {
 
     echo "$ $command"
     bash -c "$command"
+}
+
+# This function allows to rename multiple files in a directory
+# Usage: filerename old new
+function filerename() {
+  for file in $(find . -type f -name "$1*"); do
+    mv $file $(echo "$file" | sed "s/$1/$2/");
+  done
 }
 
 # Transforms a video file to a gif
