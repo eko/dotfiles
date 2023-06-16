@@ -14,6 +14,7 @@ install: ## Installs dotfiles into current environment
 	@$(MAKE) DOTFILE=.oh-my-zsh/themes/eko.zsh-theme install_file
 	@$(MAKE) DOTFILE=.sources install_file
 	@$(MAKE) DOTFILE=.tmux.conf install_file
+	@$(MAKE) DOTFILE=.tmux/script-ip.sh install_file
 	@$(MAKE) DOTFILE=.vimrc install_file
 	@$(MAKE) DOTFILE=.vim/colors/jellybeans.vim install_file
 	@$(MAKE) DOTFILE=.vim/coc-settings.json install_file

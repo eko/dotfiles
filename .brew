@@ -37,7 +37,10 @@ brew install zsh
 # tmux
 brew tap greymd/tools
 brew install tmux-xpanes
+
 git clone https://github.com/tmux-plugins/tmux-resurrect ~/.tmux-resurrect
+git clone https://github.com/tmux-plugins/tmux-cowboy ~/.tmux-cowboy
+git clone https://github.com/tmux-plugins/tmux-cpu ~/.tmux-cpu
 
 # browser
 brew cask install google-chrome
