@@ -83,7 +83,7 @@ brew install fd
 brew install findutils --with-default-names
 brew install git
 brew install graphviz
-brew install htop-osx
+brew install btop
 brew install jq
 brew install tcpdump
 brew install tig
