@@ -109,5 +109,21 @@ unset file;
 #fi
 
 # Load asdf and its completion
-. "/usr/local/opt/asdf/libexec/asdf.sh"
-. "/usr/local/opt/asdf/etc/bash_completion.d/asdf.bash"
+. "$HOME/.asdf/asdf.sh"
+. "$HOME/.asdf/completions/asdf.bash"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/vincent/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/vincent/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/vincent/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/vincent/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
