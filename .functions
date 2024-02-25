@@ -241,6 +241,14 @@ function echo_and_run() {
     bash -c "$command"
 }
 
+# This function allows to rename multiple directories in a specified root directory
+# Usage: dirrename old new
+function dirrename() {
+  for file in $(find . -type d -name "$1*"); do
+    mv $file $(echo "$file" | sed "s/$1/$2/");
+  done
+}
+
 # This function allows to rename multiple files in a directory
 # Usage: filerename old new
 function filerename() {
@@ -606,6 +614,20 @@ function rabbitgraph {
     jplot --steps 1200 ready+unacked+total+consumers+publish_rate+ack_rate+redeliver_rate
 }
 
+# Kubernetes cp (put) on a specific pod
+# Usage: kcpp context namespace pod-name source dest
+function kcpp {
+    podName=`kubectl --context $1 -n $2 get pods | grep $3 | cut -d' ' -f1 | head -1`
+    echo_and_run kubectl --context $1 -n $2 cp $4 $podName:$5
+}
+
+# Kubernetes cp (get) from a specific pod
+# Usage: kcpg context namespace pod-name source dest
+function kcpg {
+    podName=`kubectl --context $1 -n $2 get pods | grep $3 | cut -d' ' -f1 | head -1`
+    echo_and_run kubectl --context $1 -n $2 cp $podName:$4 $5
+}
+
 # Kubernetes exec on a specific pod
 # Usage: kexec context namespace pod-name
 function kexec {
@@ -627,6 +649,11 @@ function kforward {
         podName=`kubectl get pods -n $2 --context $1 | grep $3 | head -1 | cut -d' ' -f1`
         echo_and_run kubectl port-forward --context=$1 -n $2 $podName $4 $5 $6 $7 $8 $9
     done
+}
+
+# Usage: kpodname context namespace pod-name
+function kpodname {
+    kubectl get pods -n $2 --context $1 | grep $3 | head -1 | cut -d' ' -f1
 }
 
 # ksocatforward context namespace 8025 25 hostname

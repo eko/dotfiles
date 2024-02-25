@@ -32,3 +32,4 @@ ffmpeg 6.1
 kubetail 1.6.18
 grpcurl 1.8.9
 k9s 0.30.4
+php 8.3.3

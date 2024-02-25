@@ -20,6 +20,7 @@ export CODEPATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin
 export PATH="$PATH:$GOBIN:$SYMFONYBIN:$CODEPATH"
 export PATH="/opt/homebrew/opt/curl/bin:$PATH"
 export PATH="$HOME/.asdf/shims:$PATH"
+export PATH="/opt/homebrew/opt/bison/bin:$PATH"
 
 # add support for ctrl+o to open selected file in VS Code
 export FZF_DEFAULT_OPTS="--bind='ctrl-o:execute(code {})+abort'"
