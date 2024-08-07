@@ -1,0 +1,53 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run the `open default settings` command
+// from the command palette or from `Zed` application menu.
+{
+    "ensure_final_newline_on_save": false,
+    "language_models": {
+        "openai": {
+            "available_models": []
+        }
+    },
+    "assistant": {
+        "default_model": {
+            "provider": "openai",
+            "model": "gpt-4o"
+        },
+        "provider": null,
+        "version": "2"
+        // "provider": {
+        //     "name": "openai",
+        //     "type": "openai",
+        //     "default_model": "gpt-4-turbo-preview",
+        //     "api_url": "http://localhost:11434/v1"
+        // }
+    },
+    "theme": "Catppuccin Mocha",
+    "ui_font_family": "Menlo",
+    "ui_font_size": 15,
+    "buffer_font_family": "Menlo",
+    "buffer_font_size": 13,
+    "format_on_save": "on",
+    "languages": {
+        "CSS": {
+            "format_on_save": "off"
+        },
+        "HCL": {
+            "tab_size": 2
+        },
+        "PHP": {
+            "format_on_save": "off"
+        },
+        "YAML": {
+            "tab_size": 2
+        }
+    },
+    "hard_tabs": false,
+    "tab_size": 4,
+    "preferred_line_length": 80
+}

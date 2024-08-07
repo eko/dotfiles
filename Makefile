@@ -6,6 +6,7 @@ help:
 install: ## Installs dotfiles into current environment
 	@$(MAKE) DOTFILE=.aliases install_file
 	@$(MAKE) DOTFILE=.brew install_file
+	@$(MAKE) DOTFILE=.config/zed/settings.json install_file
 	@$(MAKE) DOTFILE=.exports install_file
 	@$(MAKE) DOTFILE=.functions install_file
 	@$(MAKE) DOTFILE=.gitconfig install_file
@@ -44,6 +45,7 @@ retrieve-files: ## Synchronize files from local host to git repository
 	cp ~/.aliases .aliases
 	cp ~/.brew .brew
 	cp ~/.atom/config.cson .atom/config.cson
+	cp ~/.config/zed/settings.json .config/zed/settings.json
 	cp ~/.exports .exports
 	cp ~/.functions .functions
 	cp ~/.gitconfig .gitconfig
