@@ -108,10 +108,6 @@ unset file;
 #    compinit
 #fi
 
-# Load asdf and its completion
-. "$HOME/.asdf/asdf.sh"
-. "$HOME/.asdf/completions/asdf.bash"
-
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/Users/vincent/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
