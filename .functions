@@ -250,10 +250,18 @@ function dirrename() {
 }
 
 # This function allows to rename multiple files in a directory
-# Usage: filerename old new
+# Usage: filerename directory old new
 function filerename() {
-  for file in $(find . -type f -name "$1*"); do
-    mv $file $(echo "$file" | sed "s/$1/$2/");
+  for file in $(find $1 -type f -name "$2*"); do
+    mv $file $(echo "$file" | sed "s/$2/$3/");
+  done
+}
+
+# This function allows to rename multiple files in a directory
+# Usage: filerenameregex directory old new
+function filerenameregex() {
+  for file in $(find $1 -type f -regex "$2"); do
+    mv $file $(echo "$file" | sed "s/$2/$3/");
   done
 }
 
@@ -292,6 +300,11 @@ function selectnetworkinterface() {
         2) selected="Wi-Fi";;
         *) echo "Invalid option"; return;;
     esac
+}
+
+# Usage: splitpdftopng filename.pdf
+function splitpdftopng() {
+    gs -o ./output_%03d.png -sDEVICE=png16m -r300 $1
 }
 
 # Sets Cloudflare DNS servers on a network interface
@@ -531,18 +544,16 @@ function transfer() {
         return 1;
     fi
 
-    tmpfile=$( mktemp -t transferXXX );
-
     if tty -s; then
         basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g');
-        curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >> $tmpfile;
+        echo $basefile;
+        echo $1;
+        curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile";
     else
-        curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> $tmpfile;
+        curl --progress-bar --upload-file "-" "https://transfer.sh/$1";
     fi
 
-    cat $tmpfile;
     echo "\n";
-    rm -f $tmpfile;
 }
 
 # Kills processes that run of a given port number
@@ -775,4 +786,38 @@ function gopprof() {
     done
 
     echo "\npprof report generation done, available at: $PPROF_PATH"
+}
+
+# Usage: skeletoncopy <old-dir> <new-dir>
+skeletoncopy() {
+    if [ $# -ne 2 ]; then
+        echo "Usage: skeletoncopy <old> <new>"
+        return 1
+    fi
+
+    find . -name "*$1*" -print0 | while IFS= read -r -d $'\0' element; do
+        new_path="${element//$1/$2}"
+        if [ -d "$element" ]; then
+            mkdir -p "$new_path"
+            cp -R "$element"/* "$new_path"/ 2>/dev/null || true
+        else
+            cp "$element" "$new_path"
+        fi
+    done
+
+    find . -type f -name "*$2*" -print0 | while IFS= read -r -d $'\0' curfile; do
+        if file "$curfile" | grep -q "text"; then
+            sed -i '' "s#$1#$2#g" "$curfile"
+        fi
+    done
+
+    echo "done"
+}
+
+# Usage: rmdirname <dirname>
+# Removes all directories named <dirname>
+function rmdirname() {
+    find . -type d -name "$1" -print0 | while IFS= read -r -d $'\0' element; do
+        rm -rf "$element"
+    done
 }

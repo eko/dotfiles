@@ -1,3 +1,6 @@
+# ASDF
+export ASDF_DATA_DIR=/Users/vincent/.asdf
+
 # Android SDK
 export ANDROID_SDK="$HOME/Library/Android/sdk"
 
@@ -22,7 +25,7 @@ export PATH="/opt/homebrew/opt/curl/bin:$PATH"
 export PATH="/opt/homebrew/opt/bison/bin:$PATH"
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
-export PATH="$HOME/.asdf/shims:$PATH"
+export PATH="$ASDF_DATA_DIR/shims:$PATH"
 
 # add support for ctrl+o to open selected file in VS Code
 export FZF_DEFAULT_OPTS="--bind='ctrl-o:execute(code {})+abort'"
