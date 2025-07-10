@@ -4,14 +4,20 @@ GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 NC='\033[0m'
 
-# Install latest version and remove previous one
-# asdflatestreplace <plugin>
-function asdflatestreplace() {
-    asdf install $1 latest
-    asdf global $1 latest
+function asdfinstalllatests() {
+    for tool in $(asdf list | grep -E "^[a-z]"); do
+        asdf install $tool latest;
+    done
+}
 
-    local_version=`asdf list $1 | tail -1 | xargs`
-    asdf uninstall $1 $local_version
+# Usage: asdfuninstallolders
+# Removed older versions of all tools.
+function asdfuninstallolders() {
+    for tool in $(asdf list | grep -E "^[a-z]"); do
+        for version in $(asdf list $tool | grep -v "*"); do
+            asdf uninstall $tool $version;
+        done;
+    done
 }
 
 # Base64 encode a string
@@ -821,3 +827,20 @@ function rmdirname() {
         rm -rf "$element"
     done
 }
+
+# Usage: saveaudiocapturepro daily
+# Audio Capture Pro save
+function saveaudiocapturepro() {
+    src_dir=$HOME/Library/Containers/com.kenditech.AudioCapture/Data/Documents
+    dest_dir=$HOME/Desktop
+    date_prefix=$(date +%F)
+
+    find "$src_dir" -type f -name '*.m4a' | while read -r file; do
+        output="$dest_dir/${date_prefix}-$1.opus"
+
+        ffmpeg -i "$file" \
+            -filter_complex "[0:a:0][0:a:1]amerge=inputs=2[aout]" \
+            -map "[aout]" -ac 1 -c:a opus -b:a 32k -strict -2 "$output"
+    done
+}
+

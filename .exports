@@ -7,7 +7,10 @@ export ANDROID_SDK="$HOME/Library/Android/sdk"
 # GPG
 export GPG_TTY=$(tty)
 
-export PKG_CONFIG_PATH="/usr/local/Cellar/openssl@1.1/1.1.1t/lib/pkgconfig/"
+export PKG_CONFIG_PATH="/usr/local/Cellar/openssl@3/lib/pkgconfig:/opt/homebrew/bin/pkg-config:$(brew --prefix icu4c)/lib/pkgconfig:$(brew --prefix curl)/lib/pkgconfig:$(brew --prefix zlib)/lib/pkgconfig"
+
+export LDFLAGS="-L/opt/homebrew/opt/openssl@3/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/openssl@3/include"
 
 # Golang
 export GOPATH="$HOME/golang"
@@ -26,6 +29,7 @@ export PATH="/opt/homebrew/opt/bison/bin:$PATH"
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 export PATH="$ASDF_DATA_DIR/shims:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 # add support for ctrl+o to open selected file in VS Code
 export FZF_DEFAULT_OPTS="--bind='ctrl-o:execute(code {})+abort'"

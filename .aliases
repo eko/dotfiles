@@ -48,7 +48,9 @@ alias golist='go list -f "$(printf '"'"'{{.ImportPath}}:\n{{range .Imports}}  {{
 alias dnsclear="dscacheutil -flushcache && sudo killall -HUP mDNSResponder"
 
 # IP addresses
-alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias ipv4="curl -qs -4 https://ifconfig.me"
+alias ipv6="curl -qs -6 https://ifconfig.me"
+alias ip=ipv4
 alias localip="ifconfig | grep inet | grep -Ev '(inet6|127\.0\.0\.1)' | cut -d' ' -f2"
 alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
 
