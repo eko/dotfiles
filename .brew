@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-# Link Homebrew casks in `/Applications` rather than `~/Applications`
-export HOMEBREW_CASK_OPTS='--appdir=/Applications'
-
 echo "--> Make sure we're using the latest Homebrew"
 brew update
 
@@ -16,7 +13,6 @@ brew tap caskroom/cask
 echo '--> Install libraries and applications'
 
 # terminal
-brew cask install iterm2
 brew install bash
 brew install bat
 brew install cmake
@@ -42,40 +38,17 @@ git clone https://github.com/tmux-plugins/tmux-resurrect ~/.tmux-resurrect
 git clone https://github.com/tmux-plugins/tmux-cowboy ~/.tmux-cowboy
 git clone https://github.com/tmux-plugins/tmux-cpu ~/.tmux-cpu
 
-# browser
-brew cask install google-chrome
-
 # openssl
 brew install openssl
 brew link openssl --force
 
-# fonts
-brew tap homebrew/cask-fonts
-brew cask install font-allerta-stencil
-brew cask install font-roboto-slab
-
 # asdf
 brew install asdf
-
-# devops
-brew cask install virtualbox
-brew cask install vagrant
-brew cask install docker
-
-# image/video
-brew cask install vlc
 
 # php dependencies
 brew install bison
 brew install libiconv
 brew install re2c
-
-# tools
-brew cask install slack
-brew cask install tableplus
-
-# misc
-brew cask install gpgtools
 
 brew install awscli
 brew install curl
@@ -95,5 +68,4 @@ echo '--> Link homebrew apps'
 brew linkapps
 
 echo '--> Cleanup !'
-brew cask cleanup
 brew cleanup
