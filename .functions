@@ -562,6 +562,12 @@ function transfer() {
     echo "\n";
 }
 
+# Display total lags for a consumer group
+# Usage: klags <brokers> <consumer-group>
+function klags {
+    kafka-consumer-groups --bootstrap-server $1 --describe --group $2 | awk 'NR>1 && $6 ~ /^[0-9]+$/ {sum+=$6} END {print sum}'
+}
+
 # Kills processes that run of a given port number
 # Usage: killp <port number>
 function killp {
@@ -844,3 +850,148 @@ function saveaudiocapturepro() {
     done
 }
 
+
+# Usage: gitanalyze [period]
+# Analyzes a git repository: churn hotspots, contributors, bug clusters,
+# commit velocity, and firefighting frequency.
+# Default period: 1 year. Example: gitanalyze "6 months ago"
+# Source: https://piechowski.io/post/git-commands-before-reading-code/
+function gitanalyze() {
+    if ! git rev-parse --is-inside-work-tree &>/dev/null; then
+        echo "${RED}Error: not inside a git repository.${NC}"
+        return 1
+    fi
+
+    local CYAN='\033[0;36m'
+    local BOLD='\033[1m'
+    local DIM='\033[2m'
+    local MAGENTA='\033[0;35m'
+    local BLUE='\033[0;34m'
+    local WHITE='\033[1;37m'
+
+    local since="${1:-1 year ago}"
+    local repo_name=$(basename "$(git rev-parse --show-toplevel)")
+    local branch=$(git branch --show-current)
+    local total_commits=$(git rev-list --count HEAD --since="$since")
+    local total_authors=$(git shortlog -sn --no-merges --since="$since" | wc -l | tr -d ' ')
+
+    echo ""
+    echo "${BOLD}${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo "${BOLD}${CYAN}  Git Repository Analysis: ${WHITE}${repo_name}${CYAN} (${branch})${NC}"
+    echo "${BOLD}${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo "${DIM}  Period: since ${since} · ${total_commits} commits · ${total_authors} contributors${NC}"
+    echo ""
+
+    # ── 1. What Changes the Most ──────────────────────────────────
+    echo "${BOLD}${YELLOW}  ◆ CHURN HOTSPOTS${NC} ${DIM}— most frequently changed files${NC}"
+    echo "${DIM}  ──────────────────────────────────────────────────────────${NC}"
+    local churn=$(git log --format=format: --name-only --since="$since" \
+        | sort | uniq -c | sort -nr | head -20 | sed '/^\s*$/d')
+    if [ -z "$churn" ]; then
+        echo "    ${DIM}No file changes found in this period.${NC}"
+    else
+        echo "$churn" | while read -r count file; do
+            printf "    ${WHITE}%5s${NC}  %s\n" "$count" "$file"
+        done
+    fi
+    echo ""
+
+    # ── 2. Who Built This ─────────────────────────────────────────
+    echo "${BOLD}${GREEN}  ◆ CONTRIBUTORS${NC} ${DIM}— ranked by commit count${NC}"
+    echo "${DIM}  ──────────────────────────────────────────────────────────${NC}"
+    local contributors=$(git shortlog -sn --no-merges)
+    local recent_contributors=$(git shortlog -sn --no-merges --since="6 months ago")
+    if [ -z "$contributors" ]; then
+        echo "    ${DIM}No contributors found.${NC}"
+    else
+        local top_count=$(echo "$contributors" | head -1 | awk '{print $1}')
+        local total_count=$(echo "$contributors" | awk '{sum+=$1} END{print sum}')
+        echo "$contributors" | head -15 | while read -r count name; do
+            local pct=$((count * 100 / total_count))
+            local bar=""
+            local bar_len=$((pct / 4))
+            for i in $(seq 1 $bar_len); do bar+="█"; done
+            local active=""
+            if echo "$recent_contributors" | grep -q "$name"; then
+                active="${GREEN}●${NC}"
+            else
+                active="${RED}○${NC}"
+            fi
+            printf "    ${active} ${WHITE}%5s${NC} ${DIM}(%2d%%)${NC}  %-25s ${CYAN}%s${NC}\n" \
+                "$count" "$pct" "$name" "$bar"
+        done
+        echo ""
+        echo "    ${DIM}● active last 6 months  ○ inactive${NC}"
+    fi
+    echo ""
+
+    # ── 3. Where Do Bugs Cluster ──────────────────────────────────
+    echo "${BOLD}${RED}  ◆ BUG HOTSPOTS${NC} ${DIM}— files with fix/bug/broken commits${NC}"
+    echo "${DIM}  ──────────────────────────────────────────────────────────${NC}"
+    local bugs=$(git log -i -E --grep="fix|bug|broken" --name-only --format='' \
+        | sort | uniq -c | sort -nr | head -20 | sed '/^\s*$/d')
+    if [ -z "$bugs" ]; then
+        echo "    ${DIM}No bug-related commits found (good discipline or bad messages).${NC}"
+    else
+        # Cross-reference with churn hotspots
+        echo "$bugs" | while read -r count file; do
+            local risk=""
+            if echo "$churn" | grep -q "$file"; then
+                risk=" ${RED}${BOLD}⚠ high-churn${NC}"
+            fi
+            printf "    ${WHITE}%5s${NC}  %s%b\n" "$count" "$file" "$risk"
+        done
+    fi
+    echo ""
+
+    # ── 4. Is This Project Accelerating or Dying ──────────────────
+    echo "${BOLD}${MAGENTA}  ◆ COMMIT VELOCITY${NC} ${DIM}— commits per month${NC}"
+    echo "${DIM}  ──────────────────────────────────────────────────────────${NC}"
+    local velocity=$(git log --format='%ad' --date=format:'%Y-%m' --since="$since" \
+        | sort | uniq -c)
+    if [ -z "$velocity" ]; then
+        echo "    ${DIM}No commits in this period.${NC}"
+    else
+        local max_count=$(echo "$velocity" | awk '{print $1}' | sort -nr | head -1)
+        local prev_count=0
+        local first=1
+        echo "$velocity" | while read -r count month; do
+            local bar=""
+            local bar_len=$((count * 40 / max_count))
+            for i in $(seq 1 $bar_len); do bar+="▓"; done
+
+            local trend=""
+            if [ $first -eq 1 ]; then
+                first=0
+            elif [ "$count" -gt "$((prev_count + prev_count / 4))" ]; then
+                trend=" ${GREEN}↑${NC}"
+            elif [ "$count" -lt "$((prev_count - prev_count / 4))" ]; then
+                trend=" ${RED}↓${NC}"
+            fi
+            prev_count=$count
+
+            printf "    ${DIM}%s${NC}  ${WHITE}%4s${NC}  ${BLUE}%s${NC}%b\n" \
+                "$month" "$count" "$bar" "$trend"
+        done
+    fi
+    echo ""
+
+    # ── 5. How Often Is the Team Firefighting ─────────────────────
+    echo "${BOLD}${RED}  ◆ FIREFIGHTING${NC} ${DIM}— reverts, hotfixes, emergencies${NC}"
+    echo "${DIM}  ──────────────────────────────────────────────────────────${NC}"
+    local fires=$(git log --oneline --since="$since" \
+        | grep -iE 'revert|hotfix|emergency|rollback')
+    local fire_count=$(echo "$fires" | grep -c . 2>/dev/null || echo "0")
+    if [ -z "$fires" ]; then
+        echo "    ${GREEN}No reverts/hotfixes found. Stable or quiet.${NC}"
+    else
+        echo "    ${YELLOW}Found ${fire_count} firefighting commit(s):${NC}"
+        echo ""
+        echo "$fires" | while read -r line; do
+            echo "    ${RED}🔥${NC} ${DIM}${line}${NC}"
+        done
+    fi
+    echo ""
+    echo "${BOLD}${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo ""
+}
