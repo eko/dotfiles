@@ -123,3 +123,10 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/vincent/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
+
+eval "$(mise activate zsh)"
