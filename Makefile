@@ -20,7 +20,7 @@ install: ## Installs dotfiles into current environment
 	@$(MAKE) DOTFILE=.vim/colors/jellybeans.vim install_file
 	@$(MAKE) DOTFILE=.vim/coc-settings.json install_file
 	@$(MAKE) DOTFILE=.zshrc install_file
-	@$(MAKE) DOTFILE=mise/config.toml install_file
+	@$(MAKE) DOTFILE=.config/mise/config.toml install_file
 
 install-encrypted: ## Installs encrypted dotfiles into current environment
 	@$(MAKE) DOTFILE=.ssh/config install_encrypted_file
@@ -57,6 +57,6 @@ retrieve-files: ## Synchronize files from local host to git repository
 	cp ~/.vimrc .vimrc
 	cp ~/.zshrc .zshrc
 	cp ~/.iTerm2/com.googlecode.iterm2.plist .iTerm2/com.googlecode.iterm2.plist
-	cp ~/mise/config.toml mise/config.toml
+	cp ~/.config/mise/config.toml .config/mise/config.toml
 	gpg2 --encrypt --recipient vincent --output .encrypted/.ssh/config ~/.ssh/config
 	gpg2 --encrypt --recipient vincent --output .encrypted/.otpkeys ~/.otpkeys
