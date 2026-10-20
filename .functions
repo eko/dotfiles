@@ -392,6 +392,12 @@ function sshproxy() {
     echo "-> Done: proxy is ready"
 }
 
+# Runs a Caddy HTTPS reverse proxy
+# Usage: reversehttpsproxy https://toto.acme.tld:443 http://toto.acme.tld
+function reversehttpsproxy() {
+    caddy reverse-proxy --from $1 --to $2 --change-host-header --disable-redirects
+}
+
 # Connects to a TOR server of a specified country
 # Usage: torproxy {ca},{us}
 function torproxy() {
@@ -727,6 +733,60 @@ function kdiff {
     rm /tmp/$2.diff /tmp/$3.diff
 }
 
+# Usage : mise-clean [-n|--dry-run] [-x tool ...] [tool ...]
+#   -n            : display what will be deleted, without doing it
+#   -x tool       : exclude all versions of a specified tool (repeatable)
+#   tool ...      : only clean the listed tools
+function mise-clean() {
+  local dry_run=0
+  local -a exclude=() only=()
+
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      -n|--dry-run) dry_run=1 ;;
+      -x|--exclude) exclude+=("$2"); shift ;;
+      -h|--help)
+        echo "Usage: mise-clean [-n|--dry-run] [-x tool ...] [tool ...]"
+        return 0 ;;
+      *) only+=("$1") ;;
+    esac
+    shift
+  done
+
+  command -v jq >/dev/null || { echo "jq is required" >&2; return 1; }
+
+  local -a targets=()
+  local line
+  while IFS= read -r line; do
+    [[ -n "$line" ]] && targets+=("$line")
+  done < <(
+    mise ls --json | jq -r --argjson only "$(printf '%s\n' "${only[@]}" | jq -R . | jq -s .)" \
+                             --argjson excl "$(printf '%s\n' "${exclude[@]}" | jq -R . | jq -s .)" '
+      to_entries[]
+      | .key as $t
+      | select(($only | map(select(. != "")) | length) == 0 or ($only | index($t)))
+      | select(($excl | index($t)) | not)
+      | .value[]
+      | select(.source == null)
+      | "\($t)@\(.version)"'
+  )
+
+  if [[ ${#targets[@]} -eq 0 ]]; then
+    echo "Nothing to clean."
+    return 0
+  fi
+
+  if [[ $dry_run -eq 1 ]]; then
+    echo "[dry-run] Will be removed :"
+    printf '  %s\n' "${targets[@]}"
+    return 0
+  fi
+
+  echo "Removing ${#targets[@]} version(s) :"
+  printf '  %s\n' "${targets[@]}"
+  mise uninstall "${targets[@]}"
+}
+
 function pid() {
     ps aux | grep "$@" | grep -v "grep --color" | cut -d' ' -f2
 }
@@ -994,4 +1054,11 @@ function gitanalyze() {
     echo ""
     echo "${BOLD}${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
     echo ""
+}
+
+# Uncompress zstd string
+# Usage: zstd_decode_hex <string>
+func zstd_decode_hex() {
+  local hex="${1#01}"
+  echo "$hex" | xxd -r -p | zstd -d
 }
